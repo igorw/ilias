@@ -72,4 +72,28 @@ class IntegrationTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertSame(194, $this->program->evaluate('(- 200 1 2 3)', $this->env));
     }
+
+    /** @test */
+    public function evaluateIf()
+    {
+        $this->assertSame(2, $this->program->evaluate('(if 1 2 3)', $this->env));
+    }
+
+    /** @test */
+    public function evaluateIfWithRealBody()
+    {
+        $this->assertSame(2, $this->program->evaluate('(if 1 (+ 1 1) (+ 1 1 1))', $this->env));
+    }
+
+    /** @test */
+    public function evaluateIfWithFalseCondition()
+    {
+        $this->assertSame(3, $this->program->evaluate('(if 0 (+ 1 1) (+ 1 1 1))', $this->env));
+    }
+
+    /** @test */
+    public function evaluateIfWithoutElse()
+    {
+        $this->assertSame(null, $this->program->evaluate('(if 0 2)', $this->env));
+    }
 }

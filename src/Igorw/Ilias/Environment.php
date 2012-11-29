@@ -10,8 +10,9 @@ class Environment implements \ArrayAccess
     {
         $this->vars = $vars;
 
-        $this->vars['define'] = new Macro\DefineMacro($this);
-        $this->vars['lambda'] = new Macro\LambdaMacro($this);
+        $this->vars['define']   = new Macro\DefineMacro($this);
+        $this->vars['lambda']   = new Macro\LambdaMacro($this);
+        $this->vars['if']       = new Macro\IfMacro($this);
 
         $this->vars['+'] = new Func\PlusFunc();
         $this->vars['-'] = new Func\MinusFunc();
