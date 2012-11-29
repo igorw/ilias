@@ -46,7 +46,7 @@ class Environment implements \ArrayAccess
     private function evaluateExpr($sexpr)
     {
         if (!is_array($sexpr)) {
-            return $sexpr;
+            return $this->normalizeValue($sexpr);
         }
 
         $op = array_shift($sexpr);
@@ -62,6 +62,23 @@ class Environment implements \ArrayAccess
         }
 
         return $this->evaluateOp($fn, $sexpr);
+    }
+
+    private function normalizeValue($value)
+    {
+        if (is_int($value)) {
+            return $value;
+        }
+
+        if (is_string($value) && "'" === $value[0]) {
+            return substr($value, 1);
+        }
+
+        if (is_string($value)) {
+            return $this->vars[$value];
+        }
+
+        return $value;
     }
 
     private function evaluateOp($fn, array $args)

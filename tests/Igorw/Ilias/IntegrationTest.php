@@ -28,4 +28,19 @@ class IntegrationTest extends \PHPUnit_Framework_TestCase
         $this->program->evaluate('(define foo 42)', $env);
         $this->assertSame(42, $env['foo']);
     }
+
+    /** @test */
+    public function evaluateVariable()
+    {
+        $env = new Environment();
+        $env['foo'] = 42;
+        $this->assertSame(42, $this->program->evaluate('foo', $env));
+    }
+
+    /** @test */
+    public function evaluateQuotedString()
+    {
+        $env = new Environment();
+        $this->assertSame('foo', $this->program->evaluate("'foo", $env));
+    }
 }
