@@ -57,4 +57,12 @@ class IntegrationTest extends \PHPUnit_Framework_TestCase
         $env = new Environment();
         $this->assertSame([['foo']], $this->program->evaluate("'((foo))", $env));
     }
+
+    /** @test */
+    public function evaluateLambda()
+    {
+        $env = new Environment();
+        $this->program->evaluate('(define identity (lambda (x) (x)))', $env);
+        $this->assertSame(42, $this->program->evaluate('(identity 42)', $env));
+    }
 }

@@ -1,6 +1,8 @@
 <?php
 
-namespace Igorw\Ilias;
+namespace Igorw\Ilias\Macro;
+
+use Igorw\Ilias\Environment;
 
 class DefineMacro implements Macro
 {
@@ -15,6 +17,6 @@ class DefineMacro implements Macro
     {
         list($name, $value) = $args;
 
-        $this->env[$name] = $value;
+        $this->env[$name] = $this->env->evaluate([$value]);
     }
 }

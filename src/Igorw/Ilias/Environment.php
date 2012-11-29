@@ -4,12 +4,16 @@ namespace Igorw\Ilias;
 
 class Environment implements \ArrayAccess
 {
-    private $vars = array();
+    private $vars;
 
-    public function __construct()
+    public function __construct(array $vars = array())
     {
-        $this->vars['define'] = new DefineMacro($this);
-        $this->vars['+'] = 'array_sum';
+        $this->vars = $vars;
+
+        $this->vars['define'] = new Macro\DefineMacro($this);
+        $this->vars['lambda'] = new Macro\LambdaMacro($this);
+
+        $this->vars['+'] = new Func\SumFunc();
     }
 
     public function offsetGet($key)
@@ -57,7 +61,7 @@ class Environment implements \ArrayAccess
         }
 
         $fn = $this->vars[$op];
-        if ($fn instanceof Macro) {
+        if ($fn instanceof Macro\Macro) {
             return $this->evaluateMacro($fn, $sexpr);
         }
 
@@ -84,7 +88,7 @@ class Environment implements \ArrayAccess
     private function evaluateOp($fn, array $args)
     {
         $args = $this->evaluateArgs($args);
-        return call_user_func($fn, $args);
+        return call_user_func_array($fn, $args);
     }
 
     private function evaluateMacro($macro, array $args)

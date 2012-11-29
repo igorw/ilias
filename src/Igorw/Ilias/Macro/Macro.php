@@ -1,6 +1,6 @@
 <?php
 
-namespace Igorw\Ilias;
+namespace Igorw\Ilias\Macro;
 
 interface Macro
 {
