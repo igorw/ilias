@@ -16,26 +16,26 @@ class Environment
         $this->vars['+'] = 'array_sum';
     }
 
-    public function execute($code)
+    public function evaluate($code)
     {
         $tokens = $this->tokenizer->tokenize($code);
         $ast = $this->parser->parse($tokens);
 
-        return $this->executeAst($ast);
+        return $this->evaluateAst($ast);
     }
 
-    public function executeAst(array $ast)
+    public function evaluateAst(array $ast)
     {
         $result = null;
 
         foreach ($ast as $sexpr) {
-            $result = $this->executeExpr($sexpr);
+            $result = $this->evaluateExpr($sexpr);
         }
 
         return $result;
     }
 
-    private function executeExpr($sexpr)
+    private function evaluateExpr($sexpr)
     {
         if (!is_array($sexpr)) {
             return $sexpr;
@@ -43,10 +43,10 @@ class Environment
 
         $op = array_shift($sexpr);
         $args = $this->evaluateArgs($sexpr);
-        return $this->executeOp($op, $args);
+        return $this->evaluateOp($op, $args);
     }
 
-    private function executeOp($op, array $args)
+    private function evaluateOp($op, array $args)
     {
         return call_user_func($this->vars[$op], $args);
     }
@@ -55,7 +55,7 @@ class Environment
     {
         return array_map(
             function ($arg) {
-                return is_array($arg) ? $this->executeExpr($arg) : $arg;
+                return is_array($arg) ? $this->evaluateExpr($arg) : $arg;
             },
             $args
         );
