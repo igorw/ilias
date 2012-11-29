@@ -42,4 +42,11 @@ class SexprParserTest extends \PHPUnit_Framework_TestCase
         $parser = new SexprParser();
         $this->assertEquals([new QuotedValue('foo')], $parser->parse(["'", 'foo']));
     }
+
+    /** @test */
+    public function parseQuotedList()
+    {
+        $parser = new SexprParser();
+        $this->assertEquals([new QuotedValue(['foo'])], $parser->parse(["'", '(', 'foo', ')']));
+    }
 }

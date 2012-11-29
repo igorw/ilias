@@ -50,6 +50,14 @@ class SexprParser
                 $i,
             ];
         }
+
+        list($tokenRange, $i) = $this->getTokenRange($tokens, $i);
+        $list = $this->parse($tokenRange);
+
+        return [
+            new QuotedValue($list),
+            $i,
+        ];
     }
 
     private function normalizeAtom($atom)

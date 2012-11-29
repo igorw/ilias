@@ -33,4 +33,12 @@ class TokenizerTest extends \PHPUnit_Framework_TestCase
         $tokens = ["'", 'foo'];
         $this->assertSame($tokens, $tokenizer->tokenize("'foo"));
     }
+
+    /** @test */
+    public function tokenizeQuotedList()
+    {
+        $tokenizer = new Tokenizer();
+        $tokens = ["'", '(', 'foo', ')'];
+        $this->assertSame($tokens, $tokenizer->tokenize("'(foo)"));
+    }
 }
