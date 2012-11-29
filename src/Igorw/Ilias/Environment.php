@@ -4,27 +4,14 @@ namespace Igorw\Ilias;
 
 class Environment
 {
-    private $tokenizer;
-    private $parser;
     private $vars = array();
 
-    public function __construct(Tokenizer $tokenizer = null, SexprParser $parser = null)
+    public function __construct()
     {
-        $this->tokenizer = $tokenizer ?: new Tokenizer();
-        $this->parser = $parser ?: new SexprParser();
-
         $this->vars['+'] = 'array_sum';
     }
 
-    public function evaluate($code)
-    {
-        $tokens = $this->tokenizer->tokenize($code);
-        $ast = $this->parser->parse($tokens);
-
-        return $this->evaluateAst($ast);
-    }
-
-    public function evaluateAst(array $ast)
+    public function evaluate(array $ast)
     {
         $result = null;
 
