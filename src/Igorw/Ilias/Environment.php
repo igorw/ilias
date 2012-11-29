@@ -13,7 +13,8 @@ class Environment implements \ArrayAccess
         $this->vars['define'] = new Macro\DefineMacro($this);
         $this->vars['lambda'] = new Macro\LambdaMacro($this);
 
-        $this->vars['+'] = new Func\SumFunc();
+        $this->vars['+'] = new Func\PlusFunc();
+        $this->vars['-'] = new Func\MinusFunc();
     }
 
     public function offsetGet($key)

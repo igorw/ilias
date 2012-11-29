@@ -2,7 +2,7 @@
 
 namespace Igorw\Ilias\Func;
 
-class SumFunc
+class PlusFunc
 {
     public function __invoke()
     {

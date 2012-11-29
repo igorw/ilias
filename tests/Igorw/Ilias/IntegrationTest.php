@@ -12,57 +12,64 @@ class IntegrationTest extends \PHPUnit_Framework_TestCase
             new Tokenizer(),
             new SexprParser()
         );
+
+        $this->env = new Environment();
     }
 
     /** @test */
     public function evaluateValue()
     {
-        $env = new Environment();
-        $this->assertSame(3, $this->program->evaluate('(+ 1 2)', $env));
+        $this->assertSame(3, $this->program->evaluate('(+ 1 2)', $this->env));
     }
 
     /** @test */
     public function evaluateDefine()
     {
-        $env = new Environment();
-        $this->program->evaluate('(define foo 42)', $env);
-        $this->assertSame(42, $env['foo']);
+        $this->program->evaluate('(define foo 42)', $this->env);
+        $this->assertSame(42, $this->env['foo']);
     }
 
     /** @test */
     public function evaluateVariable()
     {
-        $env = new Environment();
-        $env['foo'] = 42;
-        $this->assertSame(42, $this->program->evaluate('foo', $env));
+        $this->env['foo'] = 42;
+        $this->assertSame(42, $this->program->evaluate('foo', $this->env));
     }
 
     /** @test */
     public function evaluateQuotedString()
     {
-        $env = new Environment();
-        $this->assertSame('foo', $this->program->evaluate("'foo", $env));
+        $this->assertSame('foo', $this->program->evaluate("'foo", $this->env));
     }
 
     /** @test */
     public function evaluateQuotedList()
     {
-        $env = new Environment();
-        $this->assertSame(['foo'], $this->program->evaluate("'(foo)", $env));
+        $this->assertSame(['foo'], $this->program->evaluate("'(foo)", $this->env));
     }
 
     /** @test */
     public function evaluateNestedQuotedList()
     {
-        $env = new Environment();
-        $this->assertSame([['foo']], $this->program->evaluate("'((foo))", $env));
+        $this->assertSame([['foo']], $this->program->evaluate("'((foo))", $this->env));
     }
 
     /** @test */
     public function evaluateLambda()
     {
-        $env = new Environment();
-        $this->program->evaluate('(define identity (lambda (x) (x)))', $env);
-        $this->assertSame(42, $this->program->evaluate('(identity 42)', $env));
+        $this->program->evaluate('(define identity (lambda (x) (x)))', $this->env);
+        $this->assertSame(42, $this->program->evaluate('(identity 42)', $this->env));
+    }
+
+    /** @test */
+    public function evaluateAdditionArithmetic()
+    {
+        $this->assertSame(100, $this->program->evaluate('(+ 1 2 3 94)', $this->env));
+    }
+
+    /** @test */
+    public function evaluateSubtractionArithmetic()
+    {
+        $this->assertSame(194, $this->program->evaluate('(- 200 1 2 3)', $this->env));
     }
 }
