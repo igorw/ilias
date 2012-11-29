@@ -6,11 +6,14 @@ class Environment
 {
     private $tokenizer;
     private $parser;
+    private $vars = array();
 
     public function __construct(Tokenizer $tokenizer = null, SexprParser $parser = null)
     {
         $this->tokenizer = $tokenizer ?: new Tokenizer();
         $this->parser = $parser ?: new SexprParser();
+
+        $this->vars['+'] = 'array_sum';
     }
 
     public function execute($code)
@@ -26,25 +29,35 @@ class Environment
         $result = null;
 
         foreach ($ast as $sexpr) {
-            if (!is_array($sexpr)) {
-                $result = $sexpr;
-                continue;
-            }
-
-            $op = array_shift($sexpr);
-            $result = $this->executeOp($op, $sexpr);
+            $result = $this->executeExpr($sexpr);
         }
 
         return $result;
     }
 
-    private function executeOp($op, $args)
+    private function executeExpr($sexpr)
     {
-        switch ($op)
-        {
-            case '+':
-                return array_sum($args);
-                break;
+        if (!is_array($sexpr)) {
+            return $sexpr;
         }
+
+        $op = array_shift($sexpr);
+        $args = $this->evaluateArgs($sexpr);
+        return $this->executeOp($op, $args);
+    }
+
+    private function executeOp($op, array $args)
+    {
+        return call_user_func($this->vars[$op], $args);
+    }
+
+    private function evaluateArgs(array $args)
+    {
+        return array_map(
+            function ($arg) {
+                return is_array($arg) ? $this->executeExpr($arg) : $arg;
+            },
+            $args
+        );
     }
 }
