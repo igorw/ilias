@@ -96,4 +96,20 @@ class IntegrationTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertSame(null, $this->program->evaluate('(if 0 2)', $this->env));
     }
+
+    /** @test */
+    public function evaluateGreaterThan()
+    {
+        $this->assertSame(true, $this->program->evaluate('(> 5 4)', $this->env));
+        $this->assertSame(false, $this->program->evaluate('(> 5 5)', $this->env));
+        $this->assertSame(false, $this->program->evaluate('(> 5 6)', $this->env));
+    }
+
+    /** @test */
+    public function evaluateLessThan()
+    {
+        $this->assertSame(true, $this->program->evaluate('(< 4 5)', $this->env));
+        $this->assertSame(false, $this->program->evaluate('(< 5 5)', $this->env));
+        $this->assertSame(false, $this->program->evaluate('(< 6 5)', $this->env));
+    }
 }

@@ -16,6 +16,8 @@ class Environment implements \ArrayAccess
 
         $this->vars['+'] = new Func\PlusFunc();
         $this->vars['-'] = new Func\MinusFunc();
+        $this->vars['>'] = new Func\GreaterThanFunc();
+        $this->vars['<'] = new Func\LessThanFunc();
     }
 
     public function offsetGet($key)
