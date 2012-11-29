@@ -4,13 +4,7 @@ namespace Igorw\Ilias;
 
 class SexprParser
 {
-    public function parse($code)
-    {
-        $tokens = $this->tokenize($code);
-        return $this->parseTokens($tokens);
-    }
-
-    public function parseTokens(array $tokens)
+    public function parse(array $tokens)
     {
         $ast = [];
 
@@ -31,7 +25,7 @@ class SexprParser
 
             if ('(' === $token) {
                 list($tokenRange, $i) = $this->getTokenRange($tokens, $i);
-                $ast[] = $this->parseTokens($tokenRange);
+                $ast[] = $this->parse($tokenRange);
                 continue;
             }
         }
@@ -72,36 +66,5 @@ class SexprParser
                 ];
             }
         }
-    }
-
-    private function tokenize($code)
-    {
-        $tokens = [];
-
-        for ($i = 0, $length = strlen($code); $i < $length; $i++) {
-            $char = $code[$i];
-
-            if (in_array($char, ['(', ')'])) {
-                $tokens[] = $char;
-                continue;
-            }
-
-            if (' ' === $char) {
-                $tokens[] = $char;
-                do {
-                    $next = ($length > $i) ? $code[$i+1] : null;
-                } while (' ' === $next && $i++);
-                continue;
-            }
-
-            $atom = '';
-            do {
-                $atom .= $char;
-                $next = ($length > $i) ? $code[$i+1] : null;
-            } while (!in_array($next, ['(', ')', ' ']) && $i++);
-            $tokens[] = $atom;
-        }
-
-        return $tokens;
     }
 }

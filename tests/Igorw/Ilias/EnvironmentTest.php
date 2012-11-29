@@ -12,7 +12,7 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function executeShouldParseSimpleExpression()
+    public function executeSimpleExpression()
     {
         $env = new Environment();
         $this->assertSame(3, $env->execute('(+ 1 2)'));

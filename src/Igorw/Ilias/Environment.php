@@ -4,24 +4,33 @@ namespace Igorw\Ilias;
 
 class Environment
 {
+    private $tokenizer;
     private $parser;
 
-    public function __construct(SexprParser $parser = null)
+    public function __construct(Tokenizer $tokenizer = null, SexprParser $parser = null)
     {
+        $this->tokenizer = $tokenizer ?: new Tokenizer();
         $this->parser = $parser ?: new SexprParser();
     }
 
     public function execute($code)
     {
-        if (is_numeric($code)) {
-            return (int) $code;
-        }
+        $tokens = $this->tokenizer->tokenize($code);
+        $ast = $this->parser->parse($tokens);
 
-        $ast = $this->parser->parse($code);
+        return $this->executeAst($ast);
+    }
 
+    public function executeAst(array $ast)
+    {
         $result = null;
 
         foreach ($ast as $sexpr) {
+            if (!is_array($sexpr)) {
+                $result = $sexpr;
+                continue;
+            }
+
             $op = array_shift($sexpr);
             $result = $this->executeOp($op, $sexpr);
         }
