@@ -50,4 +50,11 @@ class IntegrationTest extends \PHPUnit_Framework_TestCase
         $env = new Environment();
         $this->assertSame(['foo'], $this->program->evaluate("'(foo)", $env));
     }
+
+    /** @test */
+    public function evaluateNestedQuotedList()
+    {
+        $env = new Environment();
+        $this->assertSame([['foo']], $this->program->evaluate("'((foo))", $env));
+    }
 }
