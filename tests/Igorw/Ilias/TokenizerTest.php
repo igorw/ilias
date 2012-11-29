@@ -25,4 +25,12 @@ class TokenizerTest extends \PHPUnit_Framework_TestCase
         $tokens = ['(', '+', ' ', '1', ' ', '(', '+', ' ', '2', ' ', '3', ')', ')'];
         $this->assertSame($tokens, $tokenizer->tokenize('(+ 1 (+ 2 3))'));
     }
+
+    /** @test */
+    public function tokenizeQuotedString()
+    {
+        $tokenizer = new Tokenizer();
+        $tokens = ["'", 'foo'];
+        $this->assertSame($tokens, $tokenizer->tokenize("'foo"));
+    }
 }

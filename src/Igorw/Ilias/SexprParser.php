@@ -11,6 +11,13 @@ class SexprParser
         for ($i = 0, $length = count($tokens); $i < $length; $i++) {
             $token = $tokens[$i];
 
+            if ("'" === $token) {
+                list($parsedToken, $i) = $this->parseQuotedToken($tokens, $i);
+                $ast[] = $parsedToken;
+
+                continue;
+            }
+
             while (null !== $token && '(' !== $token && ')' !== $token) {
                 if (' ' !== $token) {
                     $ast[] = $this->normalizeAtom($token);
@@ -31,6 +38,18 @@ class SexprParser
         }
 
         return $ast;
+    }
+
+    private function parseQuotedToken(array $tokens, $i)
+    {
+        $i++;
+
+        if ('(' !== $tokens[$i]) {
+            return [
+                new QuotedValue($tokens[$i]),
+                $i,
+            ];
+        }
     }
 
     private function normalizeAtom($atom)
@@ -62,7 +81,7 @@ class SexprParser
             if (0 === $level) {
                 return [
                     array_slice($tokens, $init + 1, $i - ($init + 1)),
-                    $i
+                    $i,
                 ];
             }
         }

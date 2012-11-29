@@ -35,4 +35,11 @@ class SexprParserTest extends \PHPUnit_Framework_TestCase
             ')',
         ]));
     }
+
+    /** @test */
+    public function parseQuotedString()
+    {
+        $parser = new SexprParser();
+        $this->assertEquals([new QuotedValue('foo')], $parser->parse(["'", 'foo']));
+    }
 }

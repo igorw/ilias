@@ -24,6 +24,11 @@ class Tokenizer
                 continue;
             }
 
+            if ("'" === $char) {
+                $tokens[] = $char;
+                continue;
+            }
+
             $atom = '';
             $next = $char;
             do {

@@ -66,12 +66,12 @@ class Environment implements \ArrayAccess
 
     private function normalizeValue($value)
     {
-        if (is_int($value)) {
-            return $value;
+        if ($value instanceof QuotedValue) {
+            return $value->get();
         }
 
-        if (is_string($value) && "'" === $value[0]) {
-            return substr($value, 1);
+        if (is_int($value)) {
+            return $value;
         }
 
         if (is_string($value)) {
