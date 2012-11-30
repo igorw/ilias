@@ -66,7 +66,7 @@ class Environment implements \ArrayAccess
     private function normalizeValue($value)
     {
         if ($value instanceof QuotedValue) {
-            return $value->get();
+            return $value->getValue();
         }
 
         if (is_int($value)) {

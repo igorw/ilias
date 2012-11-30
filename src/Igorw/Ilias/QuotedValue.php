@@ -11,7 +11,7 @@ class QuotedValue
         $this->value = $value;
     }
 
-    public function get()
+    public function getValue()
     {
         return $this->value;
     }
