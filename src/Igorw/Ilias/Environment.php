@@ -48,19 +48,19 @@ class Environment implements \ArrayAccess
             return $this->normalizeValue($sexpr);
         }
 
-        $op = array_shift($sexpr);
-        $op = is_array($op) ? $this->evaluateExpr($op) : $op;
+        $funcName = array_shift($sexpr);
+        $funcName = is_array($funcName) ? $this->evaluateExpr($funcName) : $funcName;
 
-        if (!isset($this->vars[$op])) {
-            throw new \RuntimeException(sprintf('Tried to invoke non-existent function %s', $op));
+        if (!isset($this->vars[$funcName])) {
+            throw new \RuntimeException(sprintf('Tried to invoke non-existent function %s', $funcName));
         }
 
-        $fn = $this->vars[$op];
-        if ($fn instanceof Fexpr\Fexpr) {
-            return $this->evaluateFexpr($fn, $sexpr);
+        $func = $this->vars[$funcName];
+        if ($func instanceof Fexpr\Fexpr) {
+            return $this->evaluateFexpr($func, $sexpr);
         }
 
-        return $this->evaluateOp($fn, $sexpr);
+        return $this->evaluateFuncCall($func, $sexpr);
     }
 
     private function normalizeValue($value)
@@ -80,15 +80,15 @@ class Environment implements \ArrayAccess
         return $value;
     }
 
-    private function evaluateOp($fn, array $args)
+    private function evaluateFuncCall($func, array $args)
     {
         $args = $this->evaluateArgs($args);
-        return call_user_func_array($fn, $args);
+        return call_user_func_array($func, $args);
     }
 
-    private function evaluateFexpr($Fexpr, array $args)
+    private function evaluateFexpr($fexpr, array $args)
     {
-        return $Fexpr->invoke($this, $args);
+        return $fexpr->invoke($this, $args);
     }
 
     private function evaluateArgs(array $args)
