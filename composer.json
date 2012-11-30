@@ -1,4 +1,17 @@
 {
+    "name": "igorw/ilias",
+    "description": "Naive LISP implementation in PHP.",
+    "keywords": ["lisp"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Igor Wiedler",
+            "email": "igor@wiedler.ch"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0"
+    },
     "autoload": {
         "psr-0": { "Igorw\\Ilias": "src" }
     }

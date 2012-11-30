@@ -1,6 +1,7 @@
 # Ilias
 
-Crappy LISP implementation in PHP.
+Naive LISP implementation in PHP. For something more complete, check out
+[LisPHP](https://github.com/lisphp/lisphp).
 
 ## Usage
 
