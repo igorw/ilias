@@ -37,38 +37,27 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(null, $env['foo']);
     }
 
-    /** @test */
-    public function evaluateShouldReturnValue()
-    {
-        $env = new Environment();
-        $this->assertSame(2, $env->evaluate([2]));
-    }
-
-    /** @test */
-    public function evaluateSimpleExpression()
+    /**
+     * @test
+     * @dataProvider provideEvaluate
+     */
+    public function evaluate($expected, $input)
     {
         $env = Environment::standard();
-        $this->assertSame(3, $env->evaluate([
-            ['+', 1, 2]
-        ]));
+        $this->assertSame($expected, $env->evaluate([$input]));
     }
 
-    /** @test */
-    public function evaluateNestedExpression()
+    public function provideEvaluate()
     {
-        $env = Environment::standard();
-        $this->assertSame(6, $env->evaluate([
-            ['+', 1, ['+', 2, 3]]
-        ]));
-    }
-
-    /** @test */
-    public function evaluateDeeplyNestedExpression()
-    {
-        $env = Environment::standard();
-        $this->assertSame(42, $env->evaluate([
-            ['+', 1, ['+', 2, ['+', 3, 4, 5, 6, ['+', 6, 4, 3, 2], 5, 1]]]
-        ]));
+        return [
+            'value'                     => [2, 2],
+            'simple expression'         => [3, ['+', 1, 2]],
+            'nested expression'         => [6, ['+', 1, ['+', 2, 3]]],
+            'deeply nested expression'  => [
+                42,
+                ['+', 1, ['+', 2, ['+', 3, 4, 5, 6, ['+', 6, 4, 3, 2], 5, 1]]],
+            ],
+        ];
     }
 
     /**
@@ -79,8 +68,6 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
     public function nonExistentFunctionShouldThrowException()
     {
         $env = new Environment();
-        $this->assertSame(42, $env->evaluate([
-            ['foo']
-        ]));
+        $this->assertSame(42, $env->evaluate([['foo']]));
     }
 }
