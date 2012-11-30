@@ -68,6 +68,6 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
     public function nonExistentFunctionShouldThrowException()
     {
         $env = new Environment();
-        $this->assertSame(42, $env->evaluate([['foo']]));
+        $env->evaluate([['foo']]);
     }
 }
