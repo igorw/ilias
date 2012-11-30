@@ -10,9 +10,9 @@ class Environment implements \ArrayAccess
     {
         $this->vars = $vars;
 
-        $this->vars['define']   = new Macro\DefineMacro($this);
-        $this->vars['lambda']   = new Macro\LambdaMacro($this);
-        $this->vars['if']       = new Macro\IfMacro($this);
+        $this->vars['define']   = new Macro\DefineMacro();
+        $this->vars['lambda']   = new Macro\LambdaMacro();
+        $this->vars['if']       = new Macro\IfMacro();
 
         $this->vars['+'] = new Func\PlusFunc();
         $this->vars['-'] = new Func\MinusFunc();
@@ -97,14 +97,14 @@ class Environment implements \ArrayAccess
 
     private function evaluateMacro($macro, array $args)
     {
-        return $macro->invoke($args);
+        return $macro->invoke($this, $args);
     }
 
     private function evaluateArgs(array $args)
     {
         return array_map(
             function ($arg) {
-                return is_array($arg) ? $this->evaluateExpr($arg) : $arg;
+                return $this->evaluateExpr($arg);
             },
             $args
         );

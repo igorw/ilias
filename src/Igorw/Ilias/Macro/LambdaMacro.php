@@ -6,19 +6,13 @@ use Igorw\Ilias\Environment;
 
 class LambdaMacro implements Macro
 {
-    private $env;
-
-    public function __construct(Environment $env)
+    public function invoke(Environment $env, array $args)
     {
-        $this->env = $env;
-    }
+        $argNames = array_shift($args);
+        $body = $args;
 
-    public function invoke(array $args)
-    {
-        list($argNames, $body) = $args;
-
-        return function () use ($argNames, $body) {
-            $env = clone $this->env;
+        return function () use ($env, $argNames, $body) {
+            $env = clone $env;
 
             $vars = array_combine($argNames, func_get_args());
             foreach ($vars as $name => $value) {

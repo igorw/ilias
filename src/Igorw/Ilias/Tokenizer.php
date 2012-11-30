@@ -16,11 +16,11 @@ class Tokenizer
                 continue;
             }
 
-            if (' ' === $char) {
-                $tokens[] = $char;
+            if (preg_match('/\s/', $char)) {
+                $tokens[] = ' ';
                 do {
                     $next = ($length > $i) ? $code[$i+1] : null;
-                } while (' ' === $next && $i++);
+                } while (preg_match('/\s/', $next) && $i++);
                 continue;
             }
 
@@ -34,7 +34,7 @@ class Tokenizer
             do {
                 $atom .= $next;
                 $next = ($length > $i+1) ? $code[$i+1] : null;
-            } while (null !== $next && !in_array($next, ['(', ')', ' ']) && ++$i);
+            } while (null !== $next && !in_array($next, ['(', ')', ' ', "\t", "\r", "\n"]) && ++$i);
             $tokens[] = $atom;
         }
 

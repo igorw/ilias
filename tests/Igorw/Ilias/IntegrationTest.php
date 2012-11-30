@@ -57,8 +57,15 @@ class IntegrationTest extends \PHPUnit_Framework_TestCase
     /** @test */
     public function evaluateLambda()
     {
-        $this->program->evaluate('(define identity (lambda (x) (x)))', $this->env);
+        $this->program->evaluate('(define identity (lambda (x) x))', $this->env);
         $this->assertSame(42, $this->program->evaluate('(identity 42)', $this->env));
+    }
+
+    /** @test */
+    public function evaluateLambdaWithRealBody()
+    {
+        $this->program->evaluate('(define add-one (lambda (x) (+ x 1)))', $this->env);
+        $this->assertSame(51, $this->program->evaluate('(add-one 50)', $this->env));
     }
 
     /** @test */
@@ -111,5 +118,16 @@ class IntegrationTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(true, $this->program->evaluate('(< 4 5)', $this->env));
         $this->assertSame(false, $this->program->evaluate('(< 5 5)', $this->env));
         $this->assertSame(false, $this->program->evaluate('(< 6 5)', $this->env));
+    }
+
+    /** @test */
+    public function evaluateFibonacci()
+    {
+        $code = '(define fib (lambda (n)
+            (if (< n 2)
+                n
+                (+ (fib (- n 1)) (fib (- n 2))))))';
+        $this->program->evaluate($code, $this->env);
+        $this->assertSame(1, $this->program->evaluate('(fib 1)', $this->env));
     }
 }

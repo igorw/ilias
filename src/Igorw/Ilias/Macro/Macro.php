@@ -2,7 +2,9 @@
 
 namespace Igorw\Ilias\Macro;
 
+use Igorw\Ilias\Environment;
+
 interface Macro
 {
-    public function invoke(array $args);
+    public function invoke(Environment $env, array $args);
 }

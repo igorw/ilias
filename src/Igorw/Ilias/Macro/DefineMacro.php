@@ -6,17 +6,10 @@ use Igorw\Ilias\Environment;
 
 class DefineMacro implements Macro
 {
-    private $env;
-
-    public function __construct(Environment $env)
+    public function invoke(Environment $env, array $args)
     {
-        $this->env = $env;
-    }
+        $name = array_shift($args);
 
-    public function invoke(array $args)
-    {
-        list($name, $value) = $args;
-
-        $this->env[$name] = $this->env->evaluate([$value]);
+        $env[$name] = $env->evaluate($args);
     }
 }
