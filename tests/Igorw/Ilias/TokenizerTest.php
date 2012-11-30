@@ -8,10 +8,10 @@ class TokenizerTest extends \PHPUnit_Framework_TestCase
      * @test
      * @dataProvider provideTokenize
      */
-    public function tokenizeValue($expected, $input)
+    public function tokenizeValue($expected, $code)
     {
         $tokenizer = new Tokenizer();
-        $this->assertSame($expected, $tokenizer->tokenize($input));
+        $this->assertSame($expected, $tokenizer->tokenize($code));
     }
 
     public function provideTokenize()

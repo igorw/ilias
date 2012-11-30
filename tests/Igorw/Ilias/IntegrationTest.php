@@ -20,7 +20,7 @@ class IntegrationTest extends \PHPUnit_Framework_TestCase
      * @test
      * @dataProvider provideEvaluate
      */
-    public function evaluate($expected, $code, $vars = array())
+    public function evaluate($expected, $code, array $vars = array())
     {
         foreach ($vars as $name => $value) {
             $this->env[$name] = $value;

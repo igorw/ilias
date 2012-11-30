@@ -8,10 +8,10 @@ class SexprParserTest extends \PHPUnit_Framework_TestCase
      * @test
      * @dataProvider provideParse
      */
-    public function parse($expected, $input)
+    public function parse($expected, array $tokens)
     {
         $parser = new SexprParser();
-        $this->assertEquals($expected, $parser->parse($input));
+        $this->assertEquals($expected, $parser->parse($tokens));
     }
 
     public function provideParse()

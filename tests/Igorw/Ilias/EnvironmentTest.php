@@ -41,10 +41,10 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
      * @test
      * @dataProvider provideEvaluate
      */
-    public function evaluate($expected, $input)
+    public function evaluate($expected, $code)
     {
         $env = Environment::standard();
-        $this->assertSame($expected, $env->evaluate([$input]));
+        $this->assertSame($expected, $env->evaluate([$code]));
     }
 
     public function provideEvaluate()
