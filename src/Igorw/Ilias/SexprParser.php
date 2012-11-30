@@ -11,13 +11,14 @@ class SexprParser
         for ($i = 0, $length = count($tokens); $i < $length; $i++) {
             $token = $tokens[$i];
 
+            // wrap quoted value
             if ("'" === $token) {
                 list($parsedToken, $i) = $this->parseQuotedToken($tokens, $i);
                 $ast[] = $parsedToken;
-
                 continue;
             }
 
+            // extract atoms
             while (null !== $token && '(' !== $token && ')' !== $token) {
                 if (' ' !== $token) {
                     $ast[] = $this->normalizeAtom($token);
@@ -26,10 +27,12 @@ class SexprParser
                 $token = isset($tokens[$i+1]) ? $tokens[++$i] : null;
             }
 
+            // handle end condition
             if (null === $token) {
                 break;
             }
 
+            // parse list recurively
             if ('(' === $token) {
                 list($tokenRange, $i) = $this->getTokenRange($tokens, $i);
                 $ast[] = $this->parse($tokenRange);

@@ -14,11 +14,13 @@ class Tokenizer
         for ($i = 0, $length = strlen($code); $i < $length; $i++) {
             $char = $code[$i];
 
+            // parens are single tokens
             if (in_array($char, ['(', ')'])) {
                 $tokens[] = $char;
                 continue;
             }
 
+            // any whitespace results in a space token
             if (in_array($char, $this->whitespace)) {
                 $tokens[] = ' ';
                 do {
@@ -27,11 +29,13 @@ class Tokenizer
                 continue;
             }
 
+            // quote token (just the quote character)
             if ("'" === $char) {
                 $tokens[] = $char;
                 continue;
             }
 
+            // atom token
             $atom = '';
             $next = $char;
             do {
