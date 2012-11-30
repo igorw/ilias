@@ -14,8 +14,8 @@ class ProgramTest extends \PHPUnit_Framework_TestCase
             ->with('2')
             ->will($this->returnValue(['2']));
 
-        $parser = $this->getMock('Igorw\Ilias\SexprParser');
-        $parser
+        $reader = $this->getMock('Igorw\Ilias\Reader');
+        $reader
             ->expects($this->once())
             ->method('parse')
             ->with(['2'])
@@ -28,7 +28,7 @@ class ProgramTest extends \PHPUnit_Framework_TestCase
             ->with([2])
             ->will($this->returnValue(2));
 
-        $program = new Program($lexer, $parser);
+        $program = new Program($lexer, $reader);
         $this->assertSame(2, $program->evaluate('2', $env));
     }
 }

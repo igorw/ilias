@@ -10,7 +10,7 @@ class IntegrationTest extends \PHPUnit_Framework_TestCase
     {
         $this->program = new Program(
             new Lexer(),
-            new SexprParser()
+            new Reader()
         );
 
         $this->env = Environment::standard();

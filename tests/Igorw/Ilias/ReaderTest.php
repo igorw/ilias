@@ -2,7 +2,7 @@
 
 namespace Igorw\Ilias;
 
-class SexprParserTest extends \PHPUnit_Framework_TestCase
+class ReaderTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @test
@@ -10,8 +10,8 @@ class SexprParserTest extends \PHPUnit_Framework_TestCase
      */
     public function parse($expected, array $tokens)
     {
-        $parser = new SexprParser();
-        $this->assertEquals($expected, $parser->parse($tokens));
+        $reader = new Reader();
+        $this->assertEquals($expected, $reader->parse($tokens));
     }
 
     public function provideParse()

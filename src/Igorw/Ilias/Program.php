@@ -5,18 +5,18 @@ namespace Igorw\Ilias;
 class Program
 {
     private $lexer;
-    private $parser;
+    private $reader;
 
-    public function __construct(Lexer $lexer, SexprParser $parser)
+    public function __construct(Lexer $lexer, Reader $reader)
     {
         $this->lexer = $lexer;
-        $this->parser = $parser;
+        $this->reader = $reader;
     }
 
     public function evaluate($code, Environment $env)
     {
         $tokens = $this->lexer->tokenize($code);
-        $ast = $this->parser->parse($tokens);
+        $ast = $this->reader->parse($tokens);
 
         return $env->evaluate($ast);
     }

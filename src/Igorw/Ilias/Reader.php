@@ -2,7 +2,7 @@
 
 namespace Igorw\Ilias;
 
-class SexprParser
+class Reader
 {
     public function parse(array $tokens)
     {

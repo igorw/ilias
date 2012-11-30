@@ -6,13 +6,13 @@ Naive LISP implementation in PHP. For something more complete, check out
 ## Usage
 
     use Igorw\Ilias\Lexer;
-    use Igorw\Ilias\SexprParser;
+    use Igorw\Ilias\Reader;
     use Igorw\Ilias\Environment;
     use Igorw\Ilias\Program;
 
     $program = new Program(
         new Lexer(),
-        new SexprParser()
+        new Reader()
     );
 
     $env = Environment::standard();
