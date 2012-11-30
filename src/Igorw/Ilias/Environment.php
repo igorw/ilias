@@ -56,8 +56,8 @@ class Environment implements \ArrayAccess
         }
 
         $fn = $this->vars[$op];
-        if ($fn instanceof Macro\Macro) {
-            return $this->evaluateMacro($fn, $sexpr);
+        if ($fn instanceof Fexpr\Fexpr) {
+            return $this->evaluateFexpr($fn, $sexpr);
         }
 
         return $this->evaluateOp($fn, $sexpr);
@@ -86,9 +86,9 @@ class Environment implements \ArrayAccess
         return call_user_func_array($fn, $args);
     }
 
-    private function evaluateMacro($macro, array $args)
+    private function evaluateFexpr($Fexpr, array $args)
     {
-        return $macro->invoke($this, $args);
+        return $Fexpr->invoke($this, $args);
     }
 
     private function evaluateArgs(array $args)
@@ -104,9 +104,9 @@ class Environment implements \ArrayAccess
     public static function standard()
     {
         return new static([
-            'define'    => new Macro\DefineMacro(),
-            'lambda'    => new Macro\LambdaMacro(),
-            'if'        => new Macro\IfMacro(),
+            'define'    => new Fexpr\DefineFexpr(),
+            'lambda'    => new Fexpr\LambdaFexpr(),
+            'if'        => new Fexpr\IfFexpr(),
 
             '+'         => new Func\PlusFunc(),
             '-'         => new Func\MinusFunc(),

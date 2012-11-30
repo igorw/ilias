@@ -1,10 +1,10 @@
 <?php
 
-namespace Igorw\Ilias\Macro;
+namespace Igorw\Ilias\Fexpr;
 
 use Igorw\Ilias\Environment;
 
-class IfMacro implements Macro
+class IfFexpr implements Fexpr
 {
     public function invoke(Environment $env, array $args)
     {

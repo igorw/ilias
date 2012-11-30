@@ -1,10 +1,10 @@
 <?php
 
-namespace Igorw\Ilias\Macro;
+namespace Igorw\Ilias\Fexpr;
 
 use Igorw\Ilias\Environment;
 
-class LambdaMacro implements Macro
+class LambdaFexpr implements Fexpr
 {
     public function invoke(Environment $env, array $args)
     {
