@@ -4,6 +4,9 @@ namespace Igorw\Ilias;
 
 class Tokenizer
 {
+    private $whitespace = [' ', "\t", "\r", "\n"];
+    private $nonAtom = ['(', ')', ' ', "\t", "\r", "\n"];
+
     public function tokenize($code)
     {
         $tokens = [];
@@ -16,11 +19,11 @@ class Tokenizer
                 continue;
             }
 
-            if (preg_match('/\s/', $char)) {
+            if (in_array($char, $this->whitespace)) {
                 $tokens[] = ' ';
                 do {
                     $next = ($length > $i) ? $code[$i+1] : null;
-                } while (preg_match('/\s/', $next) && $i++);
+                } while (in_array($next, $this->whitespace) && ++$i);
                 continue;
             }
 
@@ -34,7 +37,7 @@ class Tokenizer
             do {
                 $atom .= $next;
                 $next = ($length > $i+1) ? $code[$i+1] : null;
-            } while (null !== $next && !in_array($next, ['(', ')', ' ', "\t", "\r", "\n"]) && ++$i);
+            } while (null !== $next && !in_array($next, $this->nonAtom) && ++$i);
             $tokens[] = $atom;
         }
 
