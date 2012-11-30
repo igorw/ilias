@@ -2,7 +2,7 @@
 
 namespace Igorw\Ilias;
 
-class Tokenizer
+class Lexer
 {
     private $whitespace = [' ', "\t", "\r", "\n"];
     private $nonAtom = ['(', ')', ' ', "\t", "\r", "\n"];

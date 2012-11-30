@@ -2,7 +2,7 @@
 
 namespace Igorw\Ilias;
 
-class TokenizerTest extends \PHPUnit_Framework_TestCase
+class LexerTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @test
@@ -10,8 +10,8 @@ class TokenizerTest extends \PHPUnit_Framework_TestCase
      */
     public function tokenizeValue($expected, $code)
     {
-        $tokenizer = new Tokenizer();
-        $this->assertSame($expected, $tokenizer->tokenize($code));
+        $lexer = new Lexer();
+        $this->assertSame($expected, $lexer->tokenize($code));
     }
 
     public function provideTokenize()
