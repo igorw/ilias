@@ -105,6 +105,12 @@ class IntegrationTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
+    public function evaluateIfWithConditionBody()
+    {
+        $this->assertSame(3, $this->program->evaluate('(if (- 1 1) 2 3)', $this->env));
+    }
+
+    /** @test */
     public function evaluateGreaterThan()
     {
         $this->assertSame(true, $this->program->evaluate('(> 5 4)', $this->env));
@@ -120,14 +126,33 @@ class IntegrationTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(false, $this->program->evaluate('(< 6 5)', $this->env));
     }
 
-    /** @test */
-    public function evaluateFibonacci()
+    /**
+     * @test
+     * @dataProvider provideFibonacci
+     */
+    public function evaluateFibonacci($expected, $n)
     {
         $code = '(define fib (lambda (n)
             (if (< n 2)
                 n
                 (+ (fib (- n 1)) (fib (- n 2))))))';
         $this->program->evaluate($code, $this->env);
-        $this->assertSame(1, $this->program->evaluate('(fib 1)', $this->env));
+        $this->assertSame($expected, $this->program->evaluate(sprintf('(fib %s)', $n), $this->env));
+    }
+
+    public function provideFibonacci()
+    {
+        return [
+            [1,  1],
+            [1,  2],
+            [2,  3],
+            [3,  4],
+            [5,  5],
+            [8,  6],
+            [13, 7],
+            [21, 8],
+            [34, 9],
+            [55, 10],
+        ];
     }
 }

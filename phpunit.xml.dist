@@ -4,6 +4,10 @@
          colors="true"
          bootstrap="vendor/autoload.php"
 >
+    <php>
+        <ini name="xdebug.max_nesting_level" value="500" />
+    </php>
+
     <testsuites>
         <testsuite name="Ilias Test Suite">
             <directory>./tests/Igorw/</directory>

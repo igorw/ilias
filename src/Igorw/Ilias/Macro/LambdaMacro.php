@@ -12,14 +12,14 @@ class LambdaMacro implements Macro
         $body = $args;
 
         return function () use ($env, $argNames, $body) {
-            $env = clone $env;
+            $subEnv = clone $env;
 
             $vars = array_combine($argNames, func_get_args());
             foreach ($vars as $name => $value) {
-                $env[$name] = $value;
+                $subEnv[$name] = $value;
             }
 
-            return $env->evaluate($body);
+            return $subEnv->evaluate($body);
         };
     }
 }
