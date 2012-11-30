@@ -20,9 +20,8 @@ class Lexer
                 continue;
             }
 
-            // any whitespace results in a space token
+            // kill whitespace
             if (in_array($char, $this->whitespace)) {
-                $tokens[] = ' ';
                 do {
                     $next = ($length > $i) ? $code[$i+1] : null;
                 } while (in_array($next, $this->whitespace) && ++$i);

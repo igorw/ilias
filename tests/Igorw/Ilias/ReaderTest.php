@@ -22,7 +22,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
                 [['+', 1, 2]],
                 [
                     '(',
-                        '+', ' ', '1', ' ', '2',
+                        '+', '1', '2',
                     ')'
                 ],
             ],
@@ -30,7 +30,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
                 [['+', 1, ['+', 2, 3]]],
                 [
                     '(',
-                        '+', ' ', '1', ' ',
+                        '+', '1',
                         '(',
                             '+', '2', '3',
                         ')',

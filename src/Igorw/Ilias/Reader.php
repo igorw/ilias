@@ -20,9 +20,7 @@ class Reader
 
             // extract atoms
             while (null !== $token && '(' !== $token && ')' !== $token) {
-                if (' ' !== $token) {
-                    $ast[] = $this->normalizeAtom($token);
-                }
+                $ast[] = $this->normalizeAtom($token);
 
                 $token = isset($tokens[$i+1]) ? $tokens[++$i] : null;
             }
