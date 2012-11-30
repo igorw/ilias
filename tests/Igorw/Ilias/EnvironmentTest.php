@@ -47,7 +47,7 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
     /** @test */
     public function evaluateSimpleExpression()
     {
-        $env = new Environment();
+        $env = Environment::standard();
         $this->assertSame(3, $env->evaluate([
             ['+', 1, 2]
         ]));
@@ -56,7 +56,7 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
     /** @test */
     public function evaluateNestedExpression()
     {
-        $env = new Environment();
+        $env = Environment::standard();
         $this->assertSame(6, $env->evaluate([
             ['+', 1, ['+', 2, 3]]
         ]));
@@ -65,7 +65,7 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
     /** @test */
     public function evaluateDeeplyNestedExpression()
     {
-        $env = new Environment();
+        $env = Environment::standard();
         $this->assertSame(42, $env->evaluate([
             ['+', 1, ['+', 2, ['+', 3, 4, 5, 6, ['+', 6, 4, 3, 2], 5, 1]]]
         ]));

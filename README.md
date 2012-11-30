@@ -14,6 +14,6 @@ Crappy LISP implementation in PHP.
         new SexprParser()
     );
 
-    $env = new Environment();
+    $env = Environment::standard();
     $value = $program->evaluate('(+ 1 2)', $env);
     var_dump($value);

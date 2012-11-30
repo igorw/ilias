@@ -13,7 +13,7 @@ class IntegrationTest extends \PHPUnit_Framework_TestCase
             new SexprParser()
         );
 
-        $this->env = new Environment();
+        $this->env = Environment::standard();
     }
 
     /** @test */

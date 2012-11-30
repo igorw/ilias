@@ -9,15 +9,6 @@ class Environment implements \ArrayAccess
     public function __construct(array $vars = array())
     {
         $this->vars = $vars;
-
-        $this->vars['define']   = new Macro\DefineMacro();
-        $this->vars['lambda']   = new Macro\LambdaMacro();
-        $this->vars['if']       = new Macro\IfMacro();
-
-        $this->vars['+'] = new Func\PlusFunc();
-        $this->vars['-'] = new Func\MinusFunc();
-        $this->vars['>'] = new Func\GreaterThanFunc();
-        $this->vars['<'] = new Func\LessThanFunc();
     }
 
     public function offsetGet($key)
@@ -108,5 +99,19 @@ class Environment implements \ArrayAccess
             },
             $args
         );
+    }
+
+    public static function standard()
+    {
+        return new static([
+            'define'    => new Macro\DefineMacro(),
+            'lambda'    => new Macro\LambdaMacro(),
+            'if'        => new Macro\IfMacro(),
+
+            '+'         => new Func\PlusFunc(),
+            '-'         => new Func\MinusFunc(),
+            '>'         => new Func\GreaterThanFunc(),
+            '<'         => new Func\LessThanFunc(),
+        ]);
     }
 }
