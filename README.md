@@ -1,7 +1,7 @@
 # Ilias
 
 Naive LISP implementation in PHP. For something more complete, check out
-[LisPHP](https://github.com/lisphp/lisphp).
+[Lisphp](https://github.com/lisphp/lisphp).
 
 ## Usage
 
