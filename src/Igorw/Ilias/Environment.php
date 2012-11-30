@@ -22,7 +22,7 @@ class Environment implements \ArrayAccess
 
     public function offsetGet($key)
     {
-        return $this->vars[$key];
+        return isset($this->vars[$key]) ? $this->vars[$key] : null;
     }
 
     public function offsetSet($key, $value)
@@ -61,7 +61,7 @@ class Environment implements \ArrayAccess
         $op = is_array($op) ? $this->evaluateExpr($op) : $op;
 
         if (!isset($this->vars[$op])) {
-            throw new \RuntimeException(sprintf('Tried to invoke non-existent op %s', $op));
+            throw new \RuntimeException(sprintf('Tried to invoke non-existent function %s', $op));
         }
 
         $fn = $this->vars[$op];
