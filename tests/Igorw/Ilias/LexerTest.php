@@ -17,7 +17,10 @@ class LexerTest extends \PHPUnit_Framework_TestCase
     public function provideTokenize()
     {
         return [
-            'value'                 => [['42'], '42'],
+            'value'                 => [
+                ['42'],
+                '42',
+            ],
             'list'                  => [
                 ['(', '+', '1', '2', ')'],
                 '(+ 1 2)',
