@@ -4,49 +4,36 @@ namespace Igorw\Ilias;
 
 class TokenizerTest extends \PHPUnit_Framework_TestCase
 {
-    /** @test */
-    public function tokenizeValue()
+    /**
+     * @test
+     * @dataProvider provideTokenize
+     */
+    public function tokenizeValue($expected, $input)
     {
         $tokenizer = new Tokenizer();
-        $this->assertSame(['42'], $tokenizer->tokenize('42'));
+        $this->assertSame($expected, $tokenizer->tokenize($input));
     }
 
-    /** @test */
-    public function tokenizeList()
+    public function provideTokenize()
     {
-        $tokenizer = new Tokenizer();
-        $this->assertSame(['(', '+', ' ', '1', ' ', '2', ')'], $tokenizer->tokenize('(+ 1 2)'));
-    }
-
-    /** @test */
-    public function tokenizeNestedList()
-    {
-        $tokenizer = new Tokenizer();
-        $tokens = ['(', '+', ' ', '1', ' ', '(', '+', ' ', '2', ' ', '3', ')', ')'];
-        $this->assertSame($tokens, $tokenizer->tokenize('(+ 1 (+ 2 3))'));
-    }
-
-    /** @test */
-    public function tokenizeQuotedString()
-    {
-        $tokenizer = new Tokenizer();
-        $tokens = ["'", 'foo'];
-        $this->assertSame($tokens, $tokenizer->tokenize("'foo"));
-    }
-
-    /** @test */
-    public function tokenizeQuotedList()
-    {
-        $tokenizer = new Tokenizer();
-        $tokens = ["'", '(', 'foo', ')'];
-        $this->assertSame($tokens, $tokenizer->tokenize("'(foo)"));
-    }
-
-    /** @test */
-    public function tokenizeNestedQuotedList()
-    {
-        $tokenizer = new Tokenizer();
-        $tokens = ["'", '(', '(', 'foo', ')', ')'];
-        $this->assertSame($tokens, $tokenizer->tokenize("'((foo))"));
+        return [
+            'value'                 => [['42'], '42'],
+            'list'                  => [
+                ['(', '+', ' ', '1', ' ', '2', ')'],
+                '(+ 1 2)',
+            ],
+            'nested list'           => [
+                ['(', '+', ' ', '1', ' ', '(', '+', ' ', '2', ' ', '3', ')', ')'],
+                '(+ 1 (+ 2 3))',
+            ],
+            'quoted string'         => [
+                ["'", 'foo'],
+                "'foo",
+            ],
+            'quoted list'           => [
+                ["'", '(', '(', 'foo', ')', ')'],
+                "'((foo))",
+            ],
+        ];
     }
 }
