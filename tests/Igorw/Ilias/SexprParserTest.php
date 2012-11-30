@@ -4,56 +4,51 @@ namespace Igorw\Ilias;
 
 class SexprParserTest extends \PHPUnit_Framework_TestCase
 {
-    /** @test */
-    public function parseValue()
+    /**
+     * @test
+     * @dataProvider provideParse
+     */
+    public function parse($expected, $input)
     {
         $parser = new SexprParser();
-        $this->assertSame([42], $parser->parse(['42']));
+        $this->assertEquals($expected, $parser->parse($input));
     }
 
-    /** @test */
-    public function parseArithmeticExpression()
+    public function provideParse()
     {
-        $parser = new SexprParser();
-        $this->assertSame([['+', 1, 2]], $parser->parse([
-            '(',
-                '+', ' ', '1', ' ', '2',
-            ')'
-        ]));
-    }
-
-    /** @test */
-    public function parseNestedArithmeticExpression()
-    {
-        $parser = new SexprParser();
-        $this->assertSame([['+', 1, ['+', 2, 3]]], $parser->parse([
-            '(',
-                '+', ' ', '1', ' ',
-                '(',
-                    '+', '2', '3',
-                ')',
-            ')',
-        ]));
-    }
-
-    /** @test */
-    public function parseQuotedString()
-    {
-        $parser = new SexprParser();
-        $this->assertEquals([new QuotedValue('foo')], $parser->parse(["'", 'foo']));
-    }
-
-    /** @test */
-    public function parseQuotedList()
-    {
-        $parser = new SexprParser();
-        $this->assertEquals([new QuotedValue(['foo'])], $parser->parse(["'", '(', 'foo', ')']));
-    }
-
-    /** @test */
-    public function parseNestedQuotedList()
-    {
-        $parser = new SexprParser();
-        $this->assertEquals([new QuotedValue([['foo']])], $parser->parse(["'", '(', '(', 'foo', ')', ')']));
+        return [
+            'value'                     => [[42], ['42']],
+            'func invokation'           => [
+                [['+', 1, 2]],
+                [
+                    '(',
+                        '+', ' ', '1', ' ', '2',
+                    ')'
+                ],
+            ],
+            'nested func invokation'    => [
+                [['+', 1, ['+', 2, 3]]],
+                [
+                    '(',
+                        '+', ' ', '1', ' ',
+                        '(',
+                            '+', '2', '3',
+                        ')',
+                    ')',
+                ],
+            ],
+            'quoted string'             => [
+                [new QuotedValue('foo')],
+                ["'", 'foo'],
+            ],
+            'quoted list'               => [
+                [new QuotedValue(['foo'])],
+                ["'", '(', 'foo', ')'],
+            ],
+            'nested quoted list'        => [
+                [new QuotedValue([['foo']])],
+                ["'", '(', '(', 'foo', ')', ')'],
+            ],
+        ];
     }
 }
