@@ -21,6 +21,10 @@ class LexerTest extends \PHPUnit_Framework_TestCase
                 [],
                 '',
             ],
+            'empty list'                => [
+                ['(', ')'],
+                '()',
+            ],
             'value'                     => [
                 ['42'],
                 '42',

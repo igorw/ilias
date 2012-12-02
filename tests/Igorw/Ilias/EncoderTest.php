@@ -18,6 +18,7 @@ class EncoderTest extends \PHPUnit_Framework_TestCase
     {
         return [
             'empty'                     => ['', []],
+            'empty list'                => ['()', [[]]],
             'value'                     => ['42', [42]],
             'func invokation'           => [
                 '(+ 1 2)',

@@ -17,8 +17,18 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
     public function provideParse()
     {
         return [
-            'empty'                     => [[], []],
-            'value'                     => [[42], ['42']],
+            'empty'                     => [
+                [],
+                [],
+            ],
+            'empty list'                => [
+                [[]],
+                ['(', ')'],
+            ],
+            'value'                     => [
+                [42],
+                ['42'],
+            ],
             'func invokation'           => [
                 [['+', 1, 2]],
                 [
