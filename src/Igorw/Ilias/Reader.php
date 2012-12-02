@@ -30,7 +30,7 @@ class Reader
                 break;
             }
 
-            // parse list recurively
+            // parse list recursively
             if ('(' === $token) {
                 list($tokenRange, $i) = $this->getTokenRange($tokens, $i);
                 $ast[] = $this->parse($tokenRange);
