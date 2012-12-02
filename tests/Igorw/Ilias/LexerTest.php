@@ -17,25 +17,33 @@ class LexerTest extends \PHPUnit_Framework_TestCase
     public function provideTokenize()
     {
         return [
-            'value'                 => [
+            'empty'                     => [
+                [],
+                '',
+            ],
+            'value'                     => [
                 ['42'],
                 '42',
             ],
-            'list'                  => [
+            'list'                      => [
                 ['(', '+', '1', '2', ')'],
                 '(+ 1 2)',
             ],
-            'nested list'           => [
+            'nested list'               => [
                 ['(', '+', '1', '(', '+', '2', '3', ')', ')'],
                 '(+ 1 (+ 2 3))',
             ],
-            'quoted string'         => [
+            'quoted string'             => [
                 ["'", 'foo'],
                 "'foo",
             ],
-            'quoted list'           => [
+            'quoted list'               => [
                 ["'", '(', '(', 'foo', ')', ')'],
                 "'((foo))",
+            ],
+            'multiple top-level lists'  => [
+                ['(', 'foo', ')', '(', 'bar', ')'],
+                "(foo) (bar)",
             ],
         ];
     }

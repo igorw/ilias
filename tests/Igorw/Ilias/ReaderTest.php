@@ -17,6 +17,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
     public function provideParse()
     {
         return [
+            'empty'                     => [[], []],
             'value'                     => [[42], ['42']],
             'func invokation'           => [
                 [['+', 1, 2]],
@@ -48,6 +49,10 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
             'nested quoted list'        => [
                 [new QuotedValue([['foo']])],
                 ["'", '(', '(', 'foo', ')', ')'],
+            ],
+            'multiple top-level lists'  => [
+                [['foo'], ['bar']],
+                ['(', 'foo', ')', '(', 'bar', ')'],
             ],
         ];
     }

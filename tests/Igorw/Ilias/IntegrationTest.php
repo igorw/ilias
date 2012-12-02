@@ -32,6 +32,7 @@ class IntegrationTest extends \PHPUnit_Framework_TestCase
     public function provideEvaluate()
     {
         return [
+            'empty'                 => [null, ''],
             'value'                 => [3, '(+ 1 2)'],
             'variable'              => [42, 'foo', ['foo' => 42]],
             'quoted string'         => ['foo', "'foo"],

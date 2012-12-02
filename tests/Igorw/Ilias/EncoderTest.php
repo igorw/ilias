@@ -17,6 +17,7 @@ class EncoderTest extends \PHPUnit_Framework_TestCase
     public function provideEncode()
     {
         return [
+            'empty'                     => ['', []],
             'value'                     => ['42', [42]],
             'func invokation'           => [
                 '(+ 1 2)',
@@ -37,6 +38,10 @@ class EncoderTest extends \PHPUnit_Framework_TestCase
             'nested quoted list'        => [
                 "'((foo))",
                 [new QuotedValue([['foo']])],
+            ],
+            'multiple top-level lists'  => [
+                "(foo) (bar)",
+                [['foo'], ['bar']],
             ],
         ];
     }
