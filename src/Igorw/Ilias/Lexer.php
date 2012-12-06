@@ -22,9 +22,6 @@ class Lexer
 
             // kill whitespace
             if (in_array($char, $this->whitespace)) {
-                do {
-                    $next = ($length > $i) ? $code[$i+1] : null;
-                } while (in_array($next, $this->whitespace) && ++$i);
                 continue;
             }
 
