@@ -42,6 +42,10 @@ class LexerTest extends \PHPUnit_Framework_TestCase
                 "'foo",
             ],
             'quoted list'               => [
+                ["'", '(', 'foo', ')'],
+                "'(foo)",
+            ],
+            'quoted nested list'        => [
                 ["'", '(', '(', 'foo', ')', ')'],
                 "'((foo))",
             ],
