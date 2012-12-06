@@ -14,14 +14,14 @@ class Lexer
         for ($i = 0, $length = strlen($code); $i < $length; $i++) {
             $char = $code[$i];
 
-            // parens are single tokens
-            if (in_array($char, ['(', ')'])) {
-                $tokens[] = $char;
+            // kill whitespace
+            if (in_array($char, $this->whitespace)) {
                 continue;
             }
 
-            // kill whitespace
-            if (in_array($char, $this->whitespace)) {
+            // parens are single tokens
+            if (in_array($char, ['(', ')'])) {
+                $tokens[] = $char;
                 continue;
             }
 
