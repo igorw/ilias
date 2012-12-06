@@ -47,7 +47,45 @@ class LexerTest extends \PHPUnit_Framework_TestCase
             ],
             'multiple top-level lists'  => [
                 ['(', 'foo', ')', '(', 'bar', ')'],
-                "(foo) (bar)",
+                '(foo) (bar)',
+            ],
+
+            // invalid inputs
+            'single opening brace'  => [
+                ['('],
+                '(',
+            ],
+            'single closing brace'  => [
+                [')'],
+                ')',
+            ],
+            'expression without closing brace'  => [
+                ['(', 'foo'],
+                '(foo',
+            ],
+            'just a space'  => [
+                [],
+                ' ',
+            ],
+            'just a newline'  => [
+                [],
+                "\n",
+            ],
+            'just whitespace'  => [
+                [],
+                " \n ",
+            ],
+            'expression without opening brace'  => [
+                ['foo', ')'],
+                'foo)',
+            ],
+            'single quote'  => [
+                ["'"],
+                "'",
+            ],
+            'list containing quote'  => [
+                ['(', "'", ')'],
+                "(')",
             ],
         ];
     }
