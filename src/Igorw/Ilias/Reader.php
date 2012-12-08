@@ -19,15 +19,9 @@ class Reader
             }
 
             // extract atoms
-            while (null !== $token && '(' !== $token && ')' !== $token) {
+            if ('(' !== $token && ')' !== $token) {
                 $ast[] = $this->normalizeAtom($token);
-
-                $token = isset($tokens[$i+1]) ? $tokens[++$i] : null;
-            }
-
-            // handle end condition
-            if (null === $token) {
-                break;
+                continue;
             }
 
             // parse list recursively
