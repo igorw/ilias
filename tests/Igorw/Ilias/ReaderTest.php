@@ -52,6 +52,10 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
                 [new QuotedValue('foo')],
                 ["'", 'foo'],
             ],
+            'quoted int'                => [
+                [new QuotedValue(42)],
+                ["'", '42'],
+            ],
             'quoted list'               => [
                 [new QuotedValue(['foo'])],
                 ["'", '(', 'foo', ')'],

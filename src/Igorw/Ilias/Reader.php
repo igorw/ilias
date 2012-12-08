@@ -43,15 +43,19 @@ class Reader
 
     private function parseQuotedToken(array $tokens, $i)
     {
+        // skip past quote char
         $i++;
 
+        // quoted atom
         if ('(' !== $tokens[$i]) {
+            $atom = $this->normalizeAtom($tokens[$i]);
             return [
-                new QuotedValue($tokens[$i]),
+                new QuotedValue($atom),
                 $i,
             ];
         }
 
+        // quoted list
         list($tokenRange, $i) = $this->getTokenRange($tokens, $i);
         $list = $this->parse($tokenRange);
 
