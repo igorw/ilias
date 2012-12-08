@@ -19,7 +19,7 @@ class Reader
             }
 
             // extract atoms
-            if ('(' !== $token && ')' !== $token) {
+            if (!in_array($token, ['(', ')'])) {
                 $ast[] = $this->normalizeAtom($token);
                 continue;
             }
