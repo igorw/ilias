@@ -26,8 +26,8 @@ class Reader
 
             // parse list recursively
             if ('(' === $token) {
-                list($tokenRange, $i) = $this->extractListTokens($tokens, $i);
-                $ast[] = $this->parse($tokenRange);
+                list($listTokens, $i) = $this->extractListTokens($tokens, $i);
+                $ast[] = $this->parse($listTokens);
                 continue;
             }
         }
@@ -50,8 +50,8 @@ class Reader
         }
 
         // quoted list
-        list($tokenRange, $i) = $this->extractListTokens($tokens, $i);
-        $list = $this->parse($tokenRange);
+        list($listTokens, $i) = $this->extractListTokens($tokens, $i);
+        $list = $this->parse($listTokens);
 
         return [
             new QuotedValue($list),
