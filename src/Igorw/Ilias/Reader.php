@@ -32,7 +32,7 @@ class Reader
 
             // parse list recursively
             if ('(' === $token) {
-                list($tokenRange, $i) = $this->getTokenRange($tokens, $i);
+                list($tokenRange, $i) = $this->extractListTokens($tokens, $i);
                 $ast[] = $this->parse($tokenRange);
                 continue;
             }
@@ -56,7 +56,7 @@ class Reader
         }
 
         // quoted list
-        list($tokenRange, $i) = $this->getTokenRange($tokens, $i);
+        list($tokenRange, $i) = $this->extractListTokens($tokens, $i);
         $list = $this->parse($tokenRange);
 
         return [
@@ -74,10 +74,9 @@ class Reader
         return $atom;
     }
 
-    private function getTokenRange(array $tokens, $i)
+    private function extractListTokens(array $tokens, $i)
     {
         $level = 0;
-
         $init = $i;
 
         for ($length = count($tokens); $i < $length; $i++) {
