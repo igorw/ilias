@@ -1,13 +1,13 @@
 <?php
 
-namespace Igorw\Ilias\Fexpr;
+namespace Igorw\Ilias\SpecialForm;
 
 use Igorw\Ilias\Environment;
 use Igorw\Ilias\Form\ListForm;
 
-class LambdaFexpr implements Fexpr
+class LambdaForm implements SpecialForm
 {
-    public function apply(Environment $env, ListForm $args)
+    public function evaluate(Environment $env, ListForm $args)
     {
         $argNames = $args->car();
         $body = $args->cdr();

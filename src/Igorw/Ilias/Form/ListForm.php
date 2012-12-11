@@ -3,7 +3,7 @@
 namespace Igorw\Ilias\Form;
 
 use Igorw\Ilias\Environment;
-use Igorw\Ilias\Fexpr;
+use Igorw\Ilias\SpecialForm\SpecialForm;
 
 class ListForm implements Form
 {
@@ -22,8 +22,8 @@ class ListForm implements Form
             throw new \RuntimeException(sprintf('Tried to invoke non-existent function %s', $func));
         }
 
-        if ($func instanceof Fexpr\Fexpr) {
-            return $func->apply($env, $this->cdr());
+        if ($func instanceof SpecialForm) {
+            return $func->evaluate($env, $this->cdr());
         }
 
         $args = $this->evaluateArgs($env, $this->cdr());

@@ -12,9 +12,9 @@ class Environment extends \ArrayObject
     public static function standard()
     {
         return new static([
-            'define'    => new Fexpr\DefineFexpr(),
-            'lambda'    => new Fexpr\LambdaFexpr(),
-            'if'        => new Fexpr\IfFexpr(),
+            'define'    => new SpecialForm\DefineForm(),
+            'lambda'    => new SpecialForm\LambdaForm(),
+            'if'        => new SpecialForm\IfForm(),
 
             '+'         => new Func\PlusFunc(),
             '-'         => new Func\MinusFunc(),
