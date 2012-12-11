@@ -3,23 +3,30 @@
 namespace Igorw\Ilias\Fexpr;
 
 use Igorw\Ilias\Environment;
+use Igorw\Ilias\Form\ListForm;
 
 class LambdaFexpr implements Fexpr
 {
-    public function invoke(Environment $env, array $args)
+    public function apply(Environment $env, ListForm $args)
     {
-        $argNames = array_shift($args);
-        $body = $args;
+        $argNames = $args->car();
+        $body = $args->cdr();
 
         return function () use ($env, $argNames, $body) {
             $subEnv = clone $env;
 
-            $vars = array_combine($argNames, func_get_args());
+            $vars = array_combine($argNames->getAst(), func_get_args());
             foreach ($vars as $name => $value) {
                 $subEnv[$name] = $value;
             }
 
-            return $subEnv->evaluate($body);
+            $forms = $body->toArray();
+
+            $value = null;
+            foreach ($forms as $form) {
+                $value = $form->evaluate($subEnv);
+            }
+            return $value;
         };
     }
 }

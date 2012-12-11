@@ -36,38 +36,4 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
         unset($env['foo']);
         $this->assertSame(null, $env['foo']);
     }
-
-    /**
-     * @test
-     * @dataProvider provideEvaluate
-     */
-    public function evaluate($expected, $code)
-    {
-        $env = Environment::standard();
-        $this->assertSame($expected, $env->evaluate([$code]));
-    }
-
-    public function provideEvaluate()
-    {
-        return [
-            'value'                     => [2, 2],
-            'simple expression'         => [3, ['+', 1, 2]],
-            'nested expression'         => [6, ['+', 1, ['+', 2, 3]]],
-            'deeply nested expression'  => [
-                42,
-                ['+', 1, ['+', 2, ['+', 3, 4, 5, 6, ['+', 6, 4, 3, 2], 5, 1]]],
-            ],
-        ];
-    }
-
-    /**
-     * @test
-     * @expectedException RuntimeException
-     * @expectedExceptionMessage Tried to invoke non-existent function foo
-     */
-    public function nonExistentFunctionShouldThrowException()
-    {
-        $env = new Environment();
-        $env->evaluate([['foo']]);
-    }
 }

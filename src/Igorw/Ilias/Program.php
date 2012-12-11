@@ -13,11 +13,18 @@ class Program
         $this->reader = $reader;
     }
 
-    public function evaluate($code, Environment $env)
+    public function evaluate(Environment $env, $code)
     {
         $tokens = $this->lexer->tokenize($code);
         $ast = $this->reader->parse($tokens);
 
-        return $env->evaluate($ast);
+        $builder = new FormBuilder();
+        $forms = $builder->build($ast);
+
+        $value = null;
+        foreach ($forms as $form) {
+            $value = $form->evaluate($env);
+        }
+        return $value;
     }
 }

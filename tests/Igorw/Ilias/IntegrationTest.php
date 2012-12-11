@@ -5,6 +5,7 @@ namespace Igorw\Ilias;
 class IntegrationTest extends \PHPUnit_Framework_TestCase
 {
     private $program;
+    private $env;
 
     public function setUp()
     {
@@ -26,7 +27,7 @@ class IntegrationTest extends \PHPUnit_Framework_TestCase
             $this->env[$name] = $value;
         }
 
-        $this->assertSame($expected, $this->program->evaluate($code, $this->env));
+        $this->assertSame($expected, $this->program->evaluate($this->env, $code));
     }
 
     public function provideEvaluate()
@@ -59,24 +60,24 @@ class IntegrationTest extends \PHPUnit_Framework_TestCase
     /** @test */
     public function evaluateDefine()
     {
-        $this->program->evaluate('(define foo 42)', $this->env);
+        $this->program->evaluate($this->env, '(define foo 42)');
         $this->assertSame(42, $this->env['foo']);
     }
 
     /** @test */
     public function evaluateGreaterThan()
     {
-        $this->assertSame(true, $this->program->evaluate('(> 5 4)', $this->env));
-        $this->assertSame(false, $this->program->evaluate('(> 5 5)', $this->env));
-        $this->assertSame(false, $this->program->evaluate('(> 5 6)', $this->env));
+        $this->assertSame(true, $this->program->evaluate($this->env, '(> 5 4)'));
+        $this->assertSame(false, $this->program->evaluate($this->env, '(> 5 5)'));
+        $this->assertSame(false, $this->program->evaluate($this->env, '(> 5 6)'));
     }
 
     /** @test */
     public function evaluateLessThan()
     {
-        $this->assertSame(true, $this->program->evaluate('(< 4 5)', $this->env));
-        $this->assertSame(false, $this->program->evaluate('(< 5 5)', $this->env));
-        $this->assertSame(false, $this->program->evaluate('(< 6 5)', $this->env));
+        $this->assertSame(true, $this->program->evaluate($this->env, '(< 4 5)'));
+        $this->assertSame(false, $this->program->evaluate($this->env, '(< 5 5)'));
+        $this->assertSame(false, $this->program->evaluate($this->env, '(< 6 5)'));
     }
 
     /**
@@ -89,8 +90,8 @@ class IntegrationTest extends \PHPUnit_Framework_TestCase
             (if (< n 2)
                 n
                 (+ (fib (- n 1)) (fib (- n 2))))))';
-        $this->program->evaluate($code, $this->env);
-        $this->assertSame($expected, $this->program->evaluate(sprintf('(fib %s)', $n), $this->env));
+        $this->program->evaluate($this->env, $code);
+        $this->assertSame($expected, $this->program->evaluate($this->env, sprintf('(fib %s)', $n)));
     }
 
     public function provideFibonacci()

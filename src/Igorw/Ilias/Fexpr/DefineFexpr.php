@@ -3,13 +3,13 @@
 namespace Igorw\Ilias\Fexpr;
 
 use Igorw\Ilias\Environment;
+use Igorw\Ilias\Form\ListForm;
 
 class DefineFexpr implements Fexpr
 {
-    public function invoke(Environment $env, array $args)
+    public function apply(Environment $env, ListForm $args)
     {
-        $name = array_shift($args);
-
-        $env[$name] = $env->evaluate($args);
+        $name = $args->car()->getAst();
+        $env[$name] = $args->cdr()->car()->evaluate($env);
     }
 }

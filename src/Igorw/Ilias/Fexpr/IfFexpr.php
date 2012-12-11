@@ -3,15 +3,17 @@
 namespace Igorw\Ilias\Fexpr;
 
 use Igorw\Ilias\Environment;
+use Igorw\Ilias\Form\ListForm;
 
 class IfFexpr implements Fexpr
 {
-    public function invoke(Environment $env, array $args)
+    public function apply(Environment $env, ListForm $args)
     {
-        $args[2] = isset($args[2]) ? $args[2] : null;
-        list($condition, $trueForm, $falseForm) = $args;
+        $condition  = $args->car();
+        $trueForm   = $args->cdr()->car();
+        $falseForm  = $args->cdr()->cdr()->car();
 
-        $form = ($env->evaluate([$condition])) ? $trueForm : $falseForm;
-        return $env->evaluate([$form]);
+        $form = ($condition->evaluate($env)) ? $trueForm : $falseForm;
+        return $form ? $form->evaluate($env) : null;
     }
 }

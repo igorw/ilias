@@ -3,8 +3,9 @@
 namespace Igorw\Ilias\Fexpr;
 
 use Igorw\Ilias\Environment;
+use Igorw\Ilias\Form\ListForm;
 
 interface Fexpr
 {
-    public function invoke(Environment $env, array $args);
+    public function apply(Environment $env, ListForm $args);
 }
