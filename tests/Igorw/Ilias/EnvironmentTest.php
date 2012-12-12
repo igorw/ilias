@@ -34,6 +34,6 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
         $env = new Environment();
         $env['foo'] = 'bar';
         unset($env['foo']);
-        $this->assertSame(null, $env['foo']);
+        $this->assertFalse(isset($env['foo']));
     }
 }

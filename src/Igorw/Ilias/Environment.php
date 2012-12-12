@@ -4,11 +4,6 @@ namespace Igorw\Ilias;
 
 class Environment extends \ArrayObject
 {
-    public function offsetGet($key)
-    {
-        return isset($this[$key]) ? parent::offsetGet($key) : null;
-    }
-
     public static function standard()
     {
         return new static([
