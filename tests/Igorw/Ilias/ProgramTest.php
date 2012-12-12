@@ -24,7 +24,7 @@ class ProgramTest extends \PHPUnit_Framework_TestCase
         $builder = $this->getMock('Igorw\Ilias\FormGraphBuilder');
         $builder
             ->expects($this->once())
-            ->method('parse')
+            ->method('parseAst')
             ->with([2])
             ->will($this->returnValue([new Form\LiteralForm(2)]));
 

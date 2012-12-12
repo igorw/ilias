@@ -20,7 +20,7 @@ class Program
         $tokens = $this->lexer->tokenize($code);
         $ast = $this->reader->parse($tokens);
 
-        $forms = $this->builder->parse($ast);
+        $forms = $this->builder->parseAst($ast);
 
         $value = null;
         foreach ($forms as $form) {

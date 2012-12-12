@@ -6,16 +6,16 @@ class FormGraphBuilderTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @test
-     * @dataProvider provideParse
+     * @dataProvider provideParseAst
      */
-    public function parse($expected, $sexpr)
+    public function parseAst($expected, $sexpr)
     {
         $builder = new FormGraphBuilder();
-        $form = $builder->parse([$sexpr]);
+        $form = $builder->parseAst([$sexpr]);
         $this->assertEquals([$expected], $form);
     }
 
-    public function provideParse()
+    public function provideParseAst()
     {
         return [
             'value'                     => [
