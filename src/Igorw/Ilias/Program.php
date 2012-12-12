@@ -19,7 +19,7 @@ class Program
         $ast = $this->reader->parse($tokens);
 
         $builder = new FormBuilder();
-        $forms = $builder->build($ast);
+        $forms = $builder->parse($ast);
 
         $value = null;
         foreach ($forms as $form) {

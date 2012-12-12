@@ -6,16 +6,16 @@ class FormBuilderTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @test
-     * @dataProvider provideBuild
+     * @dataProvider provideParse
      */
-    public function build($expected, $sexpr)
+    public function parse($expected, $sexpr)
     {
         $builder = new FormBuilder();
-        $form = $builder->build([$sexpr]);
+        $form = $builder->parse([$sexpr]);
         $this->assertEquals([$expected], $form);
     }
 
-    public function provideBuild()
+    public function provideParse()
     {
         return [
             'value'                     => [

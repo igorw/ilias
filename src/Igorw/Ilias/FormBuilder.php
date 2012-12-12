@@ -4,7 +4,7 @@ namespace Igorw\Ilias;
 
 class FormBuilder
 {
-    public function build(array $ast)
+    public function parse(array $ast)
     {
         return array_map([$this, 'parseSexpr'], $ast);
     }
@@ -15,7 +15,7 @@ class FormBuilder
             return $this->parseAtom($sexpr);
         }
 
-        $list = $this->build($sexpr);
+        $list = $this->parse($sexpr);
         return new Form\ListForm($list);
     }
 
