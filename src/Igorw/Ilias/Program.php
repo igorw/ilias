@@ -18,7 +18,7 @@ class Program
         $tokens = $this->lexer->tokenize($code);
         $ast = $this->reader->parse($tokens);
 
-        $builder = new FormBuilder();
+        $builder = new FormGraphBuilder();
         $forms = $builder->parse($ast);
 
         $value = null;
