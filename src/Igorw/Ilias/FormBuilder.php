@@ -21,7 +21,7 @@ class FormBuilder
 
     private function parseAtom($atom)
     {
-        if ($atom instanceof QuotedValue) {
+        if ($atom instanceof Ast\QuotedValue) {
             return new Form\QuoteForm($atom);
         }
 

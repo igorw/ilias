@@ -3,7 +3,7 @@
 namespace Igorw\Ilias\Form;
 
 use Igorw\Ilias\Environment;
-use Igorw\Ilias\QuotedValue;
+use Igorw\Ilias\Ast\QuotedValue;
 
 class QuoteForm implements Form
 {

@@ -12,7 +12,7 @@ class Encoder
 
     public function encodeForm($form)
     {
-        if ($form instanceof QuotedValue) {
+        if ($form instanceof Ast\QuotedValue) {
             return "'".$this->encodeForm($form->getValue());
         }
 

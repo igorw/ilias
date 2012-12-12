@@ -44,7 +44,7 @@ class Reader
         if ('(' !== $tokens[$i]) {
             $atom = $this->normalizeAtom($tokens[$i]);
             return [
-                new QuotedValue($atom),
+                new Ast\QuotedValue($atom),
                 $i,
             ];
         }
@@ -54,7 +54,7 @@ class Reader
         $list = $this->parse($listTokens);
 
         return [
-            new QuotedValue($list),
+            new Ast\QuotedValue($list),
             $i,
         ];
     }

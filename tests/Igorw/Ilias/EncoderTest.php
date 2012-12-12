@@ -2,6 +2,8 @@
 
 namespace Igorw\Ilias;
 
+use Igorw\Ilias\Ast\QuotedValue;
+
 class EncoderTest extends \PHPUnit_Framework_TestCase
 {
     /**
