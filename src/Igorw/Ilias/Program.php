@@ -19,7 +19,6 @@ class Program
     {
         $tokens = $this->lexer->tokenize($code);
         $ast = $this->reader->parse($tokens);
-
         $forms = $this->builder->parseAst($ast);
 
         $value = null;
