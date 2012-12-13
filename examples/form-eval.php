@@ -6,7 +6,7 @@ require __DIR__.'/../vendor/autoload.php';
 
 $ast = [
     ['+', 1, 2],
-    ['+', 1, ['+', 1, 1]],
+    ['+', 1, ['+', 2, 3]],
     [['get-plus-func'], 1, 2],
     ['get-random-number'],
 ];
