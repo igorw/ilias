@@ -8,7 +8,7 @@ class Program
     private $reader;
     private $builder;
 
-    public function __construct(Lexer $lexer, Reader $reader, FormGraphBuilder $builder)
+    public function __construct(Lexer $lexer, Reader $reader, FormTreeBuilder $builder)
     {
         $this->lexer = $lexer;
         $this->reader = $reader;

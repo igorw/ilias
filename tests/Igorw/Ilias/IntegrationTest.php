@@ -12,7 +12,7 @@ class IntegrationTest extends \PHPUnit_Framework_TestCase
         $this->program = new Program(
             new Lexer(),
             new Reader(),
-            new FormGraphBuilder()
+            new FormTreeBuilder()
         );
 
         $this->env = Environment::standard();

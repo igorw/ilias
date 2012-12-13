@@ -2,7 +2,7 @@
 
 namespace Igorw\Ilias;
 
-class FormGraphBuilderTest extends \PHPUnit_Framework_TestCase
+class FormTreeBuilderTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @test
@@ -10,7 +10,7 @@ class FormGraphBuilderTest extends \PHPUnit_Framework_TestCase
      */
     public function parseAst($expected, $sexpr)
     {
-        $builder = new FormGraphBuilder();
+        $builder = new FormTreeBuilder();
         $form = $builder->parseAst([$sexpr]);
         $this->assertEquals([$expected], $form);
     }

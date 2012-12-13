@@ -14,7 +14,7 @@ Naive LISP implementation in PHP. For something more complete, check out
     $program = new Program(
         new Lexer(),
         new Reader(),
-        new FormGraphBuilder()
+        new FormTreeBuilder()
     );
 
     $env = Environment::standard();

@@ -2,7 +2,7 @@
 
 namespace Igorw\Ilias;
 
-class FormGraphBuilder
+class FormTreeBuilder
 {
     public function parseAst(array $ast)
     {
