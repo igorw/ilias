@@ -11,9 +11,9 @@ class IfForm implements SpecialForm
     {
         $condition  = $args->car();
         $trueForm   = $args->cdr()->car();
-        $falseForm  = $args->cdr()->cdr()->car();
+        $elseForm  = $args->cdr()->cdr()->car();
 
-        $form = ($condition->evaluate($env)) ? $trueForm : $falseForm;
+        $form = ($condition->evaluate($env)) ? $trueForm : $elseForm;
         return $form ? $form->evaluate($env) : null;
     }
 }
