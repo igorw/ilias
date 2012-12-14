@@ -9,7 +9,7 @@ class DefineForm implements SpecialForm
 {
     public function evaluate(Environment $env, ListForm $args)
     {
-        $name = $args->car()->getAst();
+        $name = $args->car()->getSymbol();
         $env[$name] = $args->cdr()->car()->evaluate($env);
     }
 }

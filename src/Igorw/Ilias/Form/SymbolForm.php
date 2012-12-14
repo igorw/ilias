@@ -18,6 +18,11 @@ class SymbolForm implements Form
         return $env[$this->symbol];
     }
 
+    public function getSymbol()
+    {
+        return $this->symbol;
+    }
+
     public function getAst()
     {
         return $this->symbol;
