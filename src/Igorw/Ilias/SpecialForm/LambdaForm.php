@@ -9,24 +9,34 @@ class LambdaForm implements SpecialForm
 {
     public function evaluate(Environment $env, ListForm $args)
     {
-        $argNames = $args->car();
-        $body = $args->cdr();
+        $symbols = $args->car()->toArray();
+        $argNames = $this->getMappedSymbols($symbols);
 
-        return function () use ($env, $argNames, $body) {
+        $bodyForms = $args->cdr()->toArray();
+
+        return function () use ($env, $argNames, $bodyForms) {
             $subEnv = clone $env;
 
-            $vars = array_combine($argNames->getAst(), func_get_args());
+            $vars = array_combine($argNames, func_get_args());
             foreach ($vars as $name => $value) {
                 $subEnv[$name] = $value;
             }
 
-            $forms = $body->toArray();
-
             $value = null;
-            foreach ($forms as $form) {
+            foreach ($bodyForms as $form) {
                 $value = $form->evaluate($subEnv);
             }
             return $value;
         };
+    }
+
+    private function getMappedSymbols(array $symbols)
+    {
+        return array_map(
+            function ($symbol) {
+                return $symbol->getSymbol();
+            },
+            $symbols
+        );
     }
 }
