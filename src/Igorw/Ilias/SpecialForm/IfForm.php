@@ -9,11 +9,11 @@ class IfForm implements SpecialForm
 {
     public function evaluate(Environment $env, ListForm $args)
     {
-        $condition  = $args->car();
-        $trueForm   = $args->cdr()->car();
+        $predicate = $args->car();
+        $trueForm  = $args->cdr()->car();
         $elseForm  = $args->cdr()->cdr()->car();
 
-        $form = ($condition->evaluate($env)) ? $trueForm : $elseForm;
+        $form = ($predicate->evaluate($env)) ? $trueForm : $elseForm;
         return $form ? $form->evaluate($env) : null;
     }
 }
