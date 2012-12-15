@@ -22,3 +22,8 @@ $env = Environment::standard();
 $value = $program->evaluate($env, '(+ 1 2)');
 var_dump($value);
 ```
+
+will output:
+
+```int(3)```
+
