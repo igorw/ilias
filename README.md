@@ -5,18 +5,20 @@ Naive LISP implementation in PHP. For something more complete, check out
 
 ## Usage
 
-    use Igorw\Ilias\Lexer;
-    use Igorw\Ilias\Reader;
-    use Igorw\Ilias\FormGraphBuilder;
-    use Igorw\Ilias\Environment;
-    use Igorw\Ilias\Program;
+```php
+use Igorw\Ilias\Lexer;
+use Igorw\Ilias\Reader;
+use Igorw\Ilias\FormTreeBuilder;
+use Igorw\Ilias\Environment;
+use Igorw\Ilias\Program;
 
-    $program = new Program(
-        new Lexer(),
-        new Reader(),
-        new FormTreeBuilder()
-    );
+$program = new Program(
+    new Lexer(),
+    new Reader(),
+    new FormTreeBuilder()
+);
 
-    $env = Environment::standard();
-    $value = $program->evaluate('(+ 1 2)', $env);
-    var_dump($value);
+$env = Environment::standard();
+$value = $program->evaluate($env, '(+ 1 2)');
+var_dump($value);
+```
