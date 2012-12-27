@@ -4,9 +4,6 @@ namespace Igorw\Ilias;
 
 use Igorw\Ilias\Form\Form;
 use Igorw\Ilias\Form\ListForm;
-use Igorw\Ilias\Form\SymbolForm;
-use Igorw\Ilias\SpecialForm\SpecialForm;
-use Igorw\Ilias\SpecialForm\MacroForm;
 
 class MacroExpander
 {
@@ -34,9 +31,9 @@ class MacroExpander
 
     private function isMacroCall(ListForm $form, Environment $env)
     {
-        return $form->car() instanceof SymbolForm
+        return $form->car() instanceof Form\SymbolForm
             && $form->car()->existsInEnv($env)
-            && $form->car()->evaluate($env) instanceof MacroForm;
+            && $form->car()->evaluate($env) instanceof SpecialForm\MacroForm;
     }
 
     private function getMacroForm(ListForm $form, Environment $env)
