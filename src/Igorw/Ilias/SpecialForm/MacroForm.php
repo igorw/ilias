@@ -26,11 +26,11 @@ class MacroForm implements SpecialForm
 
     private function expandOne(Form $form, Environment $env)
     {
+        $transformForm = new LambdaForm();
         $transformFormArgs = new ListForm([
             $this->macroArgs,
             $this->macroBody,
         ]);
-        $transformForm = new LambdaForm();
 
         $transformFn = $transformForm->evaluate($env, $transformFormArgs);
 
