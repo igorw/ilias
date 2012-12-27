@@ -12,7 +12,8 @@ if (1 === $argc) {
 $program = new Program(
     new Lexer(),
     new Reader(),
-    new FormTreeBuilder()
+    new FormTreeBuilder(),
+    new MacroExpander
 );
 
 $env = Environment::standard();

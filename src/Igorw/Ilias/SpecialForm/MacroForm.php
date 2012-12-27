@@ -24,7 +24,7 @@ class MacroForm implements SpecialForm
         return $expanded->evaluate($env);
     }
 
-    private function expandOne(Form $form, Environment $env)
+    public function expandOne(Form $form, Environment $env)
     {
         $transformForm = new LambdaForm();
         $transformFormArgs = new ListForm([
