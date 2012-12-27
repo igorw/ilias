@@ -35,8 +35,7 @@ class MacroExpander
     private function isMacroCall(ListForm $form, Environment $env)
     {
         return $form->car() instanceof SymbolForm
-            && ($name = $form->car()->getSymbol())
-            && isset($env[$name])
+            && $form->car()->existsInEnv($env)
             && $form->car()->evaluate($env) instanceof MacroForm;
     }
 

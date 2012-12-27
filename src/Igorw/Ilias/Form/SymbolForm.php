@@ -18,6 +18,11 @@ class SymbolForm implements Form
         return $env[$this->symbol];
     }
 
+    public function existsInEnv(Environment $env)
+    {
+        return isset($env[$this->symbol]);
+    }
+
     public function getSymbol()
     {
         return $this->symbol;
