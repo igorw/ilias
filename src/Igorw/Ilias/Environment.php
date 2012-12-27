@@ -10,11 +10,14 @@ class Environment extends \ArrayObject
             'define'    => new SpecialForm\DefineForm(),
             'lambda'    => new SpecialForm\LambdaForm(),
             'if'        => new SpecialForm\IfForm(),
+            'defmacro'  => new SpecialForm\DefMacroForm(),
 
             '+'         => new Func\PlusFunc(),
             '-'         => new Func\MinusFunc(),
             '>'         => new Func\GreaterThanFunc(),
             '<'         => new Func\LessThanFunc(),
+            'list'      => new Func\ListFunc(),
+            'begin'     => new Func\BeginFunc(),
         ]);
     }
 }
