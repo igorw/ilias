@@ -7,14 +7,14 @@ class Program
     private $lexer;
     private $reader;
     private $builder;
-    private $expander;
+    private $walker;
 
-    public function __construct(Lexer $lexer, Reader $reader, FormTreeBuilder $builder, MacroExpander $expander)
+    public function __construct(Lexer $lexer, Reader $reader, FormTreeBuilder $builder, Walker $walker)
     {
         $this->lexer = $lexer;
         $this->reader = $reader;
         $this->builder = $builder;
-        $this->expander = $expander;
+        $this->walker = $walker;
     }
 
     public function evaluate(Environment $env, $code)
@@ -25,7 +25,7 @@ class Program
 
         $value = null;
         foreach ($forms as $form) {
-            $expanded = $this->expander->expand($form, $env);
+            $expanded = $this->walker->expand($form, $env);
             $value = $expanded->evaluate($env);
         }
         return $value;

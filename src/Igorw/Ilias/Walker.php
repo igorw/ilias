@@ -5,7 +5,7 @@ namespace Igorw\Ilias;
 use Igorw\Ilias\Form\Form;
 use Igorw\Ilias\Form\ListForm;
 
-class MacroExpander
+class Walker
 {
     public function expand(Form $form, Environment $env)
     {

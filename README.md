@@ -8,7 +8,7 @@ Naive LISP implementation in PHP. For something more complete, check out
     use Igorw\Ilias\Lexer;
     use Igorw\Ilias\Reader;
     use Igorw\Ilias\FormGraphBuilder;
-    use Igorw\Ilias\MacroExpander;
+    use Igorw\Ilias\Walker;
     use Igorw\Ilias\Environment;
     use Igorw\Ilias\Program;
 
@@ -16,7 +16,7 @@ Naive LISP implementation in PHP. For something more complete, check out
         new Lexer(),
         new Reader(),
         new FormTreeBuilder(),
-        new MacroExpander()
+        new Walker()
     );
 
     $env = Environment::standard();

@@ -28,8 +28,8 @@ class ProgramTest extends \PHPUnit_Framework_TestCase
             ->with([2])
             ->will($this->returnValue([new Form\LiteralForm(2)]));
 
-        $expander = $this->getMock('Igorw\Ilias\MacroExpander');
-        $expander
+        $walker = $this->getMock('Igorw\Ilias\Walker');
+        $walker
             ->expects($this->once())
             ->method('expand')
             ->with(
@@ -40,7 +40,7 @@ class ProgramTest extends \PHPUnit_Framework_TestCase
 
         $env = $this->getMock('Igorw\Ilias\Environment');
 
-        $program = new Program($lexer, $reader, $builder, $expander);
+        $program = new Program($lexer, $reader, $builder, $walker);
         $this->assertSame(2, $program->evaluate($env, '2'));
     }
 }

@@ -13,7 +13,7 @@ $program = new Program(
     new Lexer(),
     new Reader(),
     new FormTreeBuilder(),
-    new MacroExpander
+    new Walker()
 );
 
 $env = Environment::standard();
