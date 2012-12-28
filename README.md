@@ -25,5 +25,7 @@ var_dump($value);
 
 will output:
 
-```int(3)```
+```
+int(3)
+```
 
