@@ -62,6 +62,26 @@ class WalkerTest extends \PHPUnit_Framework_TestCase
                     ],
                 ],
             ],
+            'lambda args evasion in macro' => [
+                ['lambda', ['plus', 'minus'], ['plus', 'minus', 1]],
+                ['lambda', ['plus', 'minus'], ['plus', 'minus', 1]],
+                [
+                    'plus' => [
+                        ['a', 'b'],
+                        ['list', new Ast\QuotedValue('+'), 'a', 'b'],
+                    ],
+                ],
+            ],
+            'macro replacement within lambda body' => [
+                ['lambda', ['a', 'b'], ['+', 'a', 'b']],
+                ['lambda', ['a', 'b'], ['plus', 'a', 'b']],
+                [
+                    'plus' => [
+                        ['a', 'b'],
+                        ['list', new Ast\QuotedValue('+'), 'a', 'b'],
+                    ],
+                ],
+            ],
         ];
     }
 }
