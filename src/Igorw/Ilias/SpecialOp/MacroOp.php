@@ -1,12 +1,12 @@
 <?php
 
-namespace Igorw\Ilias\SpecialForm;
+namespace Igorw\Ilias\SpecialOp;
 
 use Igorw\Ilias\Environment;
 use Igorw\Ilias\Form\Form;
 use Igorw\Ilias\Form\ListForm;
 
-class MacroForm implements SpecialForm
+class MacroOp implements SpecialOp
 {
     private $macroArgs;
     private $macroBody;
@@ -26,7 +26,7 @@ class MacroForm implements SpecialForm
 
     public function expandOne(Form $form, Environment $env)
     {
-        $transformForm = new LambdaForm();
+        $transformForm = new LambdaOp();
         $transformFormArgs = new ListForm([
             $this->macroArgs,
             $this->macroBody,

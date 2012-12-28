@@ -37,14 +37,14 @@ class Walker
     {
         return $form->car() instanceof Form\SymbolForm
             && $form->car()->existsInEnv($env)
-            && $form->car()->evaluate($env) instanceof SpecialForm\LambdaForm;
+            && $form->car()->evaluate($env) instanceof SpecialOp\LambdaOp;
     }
 
     private function isMacroCall(ListForm $form, Environment $env)
     {
         return $form->car() instanceof Form\SymbolForm
             && $form->car()->existsInEnv($env)
-            && $form->car()->evaluate($env) instanceof SpecialForm\MacroForm;
+            && $form->car()->evaluate($env) instanceof SpecialOp\MacroOp;
     }
 
     private function getMacroForm(ListForm $form, Environment $env)

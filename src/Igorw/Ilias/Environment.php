@@ -7,10 +7,10 @@ class Environment extends \ArrayObject
     public static function standard()
     {
         return new static([
-            'define'    => new SpecialForm\DefineForm(),
-            'lambda'    => new SpecialForm\LambdaForm(),
-            'if'        => new SpecialForm\IfForm(),
-            'defmacro'  => new SpecialForm\DefMacroForm(),
+            'define'    => new SpecialOp\DefineOp(),
+            'lambda'    => new SpecialOp\LambdaOp(),
+            'if'        => new SpecialOp\IfOp(),
+            'defmacro'  => new SpecialOp\DefMacroOp(),
 
             '+'         => new Func\PlusFunc(),
             '-'         => new Func\MinusFunc(),

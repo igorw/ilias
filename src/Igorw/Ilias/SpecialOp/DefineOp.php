@@ -1,11 +1,11 @@
 <?php
 
-namespace Igorw\Ilias\SpecialForm;
+namespace Igorw\Ilias\SpecialOp;
 
 use Igorw\Ilias\Environment;
 use Igorw\Ilias\Form\ListForm;
 
-class DefineForm implements SpecialForm
+class DefineOp implements SpecialOp
 {
     public function evaluate(Environment $env, ListForm $args)
     {
