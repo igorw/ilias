@@ -3,7 +3,7 @@
 namespace Igorw\Ilias\Form;
 
 use Igorw\Ilias\Environment;
-use Igorw\Ilias\SpecialForm\SpecialForm;
+use Igorw\Ilias\SpecialOp\SpecialOp;
 
 class ListForm implements Form
 {
@@ -22,7 +22,7 @@ class ListForm implements Form
             throw new \RuntimeException(sprintf('Tried to invoke non-existent function %s', $func));
         }
 
-        if ($func instanceof SpecialForm) {
+        if ($func instanceof SpecialOp) {
             return $func->evaluate($env, $this->cdr());
         }
 
