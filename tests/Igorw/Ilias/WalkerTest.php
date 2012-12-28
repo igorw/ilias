@@ -8,140 +8,59 @@ class WalkerTest extends \PHPUnit_Framework_TestCase
      * @test
      * @dataProvider provideExpand
      */
-    public function expand($expected, $form, array $vars = [])
+    public function expand($expected, $sexpr, array $macros = [])
     {
         $walker = new Walker();
+        $builder = new FormTreeBuilder();
 
         $env = Environment::standard();
-        foreach ($vars as $name => $value) {
-            $env[$name] = $value;
+        foreach ($macros as $name => $pair) {
+            list($argsSexpr, $bodySexpr) = $pair;
+            $args = $builder->parseAst([$argsSexpr])[0];
+            $body = $builder->parseAst([$bodySexpr])[0];
+            $env[$name] = new SpecialOp\MacroOp($args, $body);
         }
 
-        $this->assertEquals($expected, $walker->expand($form, $env));
+        $form = $builder->parseAst([$sexpr])[0];
+
+        $expanded = $walker->expand($form, $env);
+        $this->assertEquals($expected, $expanded->getAst());
     }
 
     public function provideExpand()
     {
         return [
             'empty list form' => [
-                new Form\ListForm([]),
-                new Form\ListForm([]),
+                [],
+                [],
             ],
             'simple list form' => [
-                new Form\ListForm([
-                    new Form\SymbolForm('+'),
-                    new Form\LiteralForm(1),
-                    new Form\LiteralForm(2),
-                ]),
-                new Form\ListForm([
-                    new Form\SymbolForm('+'),
-                    new Form\LiteralForm(1),
-                    new Form\LiteralForm(2),
-                ]),
+                ['+', 1, 2],
+                ['+', 1, 2],
             ],
             'single level macro' => [
-                new Form\ListForm([
-                    new Form\SymbolForm('+'),
-                    new Form\LiteralForm(1),
-                    new Form\LiteralForm(2),
-                ]),
-                new Form\ListForm([
-                    new Form\SymbolForm('plus'),
-                    new Form\LiteralForm(1),
-                    new Form\LiteralForm(2),
-                ]),
+                ['+', 1, 2],
+                ['plus', 1, 2],
                 [
-                    'plus' => new SpecialOp\MacroOp(
-                        new Form\ListForm([
-                            new Form\SymbolForm('a'),
-                            new Form\SymbolForm('b'),
-                        ]),
-                        new Form\ListForm([
-                            new Form\SymbolForm('list'),
-                            new Form\QuoteForm(new Form\SymbolForm('+')),
-                            new Form\SymbolForm('a'),
-                            new Form\SymbolForm('b'),
-                        ])
-                    ),
-                ]
+                    'plus' => [
+                        ['a', 'b'],
+                        ['list', new Ast\QuotedValue('+'), 'a', 'b'],
+                    ],
+                ],
             ],
             'two level macro' => [
-                new Form\ListForm([
-                    new Form\SymbolForm('+'),
-                    new Form\LiteralForm(1),
-                    new Form\LiteralForm(2),
-                ]),
-                new Form\ListForm([
-                    new Form\SymbolForm('pl'),
-                    new Form\LiteralForm(1),
-                    new Form\LiteralForm(2),
-                ]),
+                ['+', 1, 2],
+                ['pl', 1, 2],
                 [
-                    'plus' => new SpecialOp\MacroOp(
-                        new Form\ListForm([
-                            new Form\SymbolForm('a'),
-                            new Form\SymbolForm('b'),
-                        ]),
-                        new Form\ListForm([
-                            new Form\SymbolForm('list'),
-                            new Form\QuoteForm(new Form\SymbolForm('+')),
-                            new Form\SymbolForm('a'),
-                            new Form\SymbolForm('b'),
-                        ])
-                    ),
-                    'pl' => new SpecialOp\MacroOp(
-                        new Form\ListForm([
-                            new Form\SymbolForm('a'),
-                            new Form\SymbolForm('b'),
-                        ]),
-                        new Form\ListForm([
-                            new Form\SymbolForm('list'),
-                            new Form\QuoteForm(new Form\SymbolForm('plus')),
-                            new Form\SymbolForm('a'),
-                            new Form\SymbolForm('b'),
-                        ])
-                    ),
-                ]
-            ],
-            'lambda evasion in macro' => [
-                new Form\ListForm([
-                    new Form\SymbolForm('lambda'),
-                    new Form\ListForm([
-                        new Form\SymbolForm('plus'),
-                        new Form\SymbolForm('minus'),
-                    ]),
-                    new Form\ListForm([
-                        new Form\SymbolForm('plus'),
-                        new Form\SymbolForm('minus'),
-                        new Form\LiteralForm(1),
-                    ]),
-                ]),
-                new Form\ListForm([
-                    new Form\SymbolForm('lambda'),
-                    new Form\ListForm([
-                        new Form\SymbolForm('plus'),
-                        new Form\SymbolForm('minus'),
-                    ]),
-                    new Form\ListForm([
-                        new Form\SymbolForm('plus'),
-                        new Form\SymbolForm('minus'),
-                        new Form\LiteralForm(1),
-                    ]),
-                ]),
-                [
-                    'plus' => new SpecialOp\MacroOp(
-                        new Form\ListForm([
-                            new Form\SymbolForm('a'),
-                            new Form\SymbolForm('b'),
-                        ]),
-                        new Form\ListForm([
-                            new Form\SymbolForm('list'),
-                            new Form\QuoteForm(new Form\SymbolForm('+')),
-                            new Form\SymbolForm('a'),
-                            new Form\SymbolForm('b'),
-                        ])
-                    ),
-                ]
+                    'plus' => [
+                        ['a', 'b'],
+                        ['list', new Ast\QuotedValue('+'), 'a', 'b'],
+                    ],
+                    'pl' => [
+                        ['a', 'b'],
+                        ['list', new Ast\QuotedValue('plus'), 'a', 'b'],
+                    ],
+                ],
             ],
         ];
     }
