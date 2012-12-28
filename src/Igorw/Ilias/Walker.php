@@ -13,6 +13,10 @@ class Walker
             return $form;
         }
 
+        if ($this->isLambdaForm($form, $env)) {
+            return $this->expandLambdaForm($form, $env);
+        }
+
         if (!$this->isMacroCall($form, $env)) {
             return $this->expandSubLists($form, $env);
         }
@@ -29,6 +33,13 @@ class Walker
         return $form instanceof ListForm;
     }
 
+    private function isLambdaForm(ListForm $form, Environment $env)
+    {
+        return $form->car() instanceof Form\SymbolForm
+            && $form->car()->existsInEnv($env)
+            && $form->car()->evaluate($env) instanceof SpecialForm\LambdaForm;
+    }
+
     private function isMacroCall(ListForm $form, Environment $env)
     {
         return $form->car() instanceof Form\SymbolForm
@@ -41,16 +52,34 @@ class Walker
         return $form->car()->evaluate($env);
     }
 
+    private function expandLambdaForm(ListForm $form, Environment $env)
+    {
+        $subEnv = clone $env;
+        foreach ($form->cdr()->car() as $argName) {
+            $subEnv[$argName] = null;
+        }
+
+        return new ListForm(array_merge(
+            [$form->car(), $form->cdr()->car()],
+            $this->expandList($form->cdr()->cdr(), $subEnv)
+        ));
+    }
+
     private function expandSubLists(ListForm $form, Environment $env)
     {
         return new ListForm(array_merge(
             [$form->car()],
-            array_map(
-                function ($form) use ($env) {
-                    return $this->expand($form, $env);
-                },
-                $form->cdr()->toArray()
-            )
+            $this->expandList($form->cdr(), $env)
         ));
+    }
+
+    private function expandList(ListForm $form, Environment $env)
+    {
+        return array_map(
+            function ($form) use ($env) {
+                return $this->expand($form, $env);
+            },
+            $form->toArray()
+        );
     }
 }
