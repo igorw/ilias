@@ -3,6 +3,7 @@
 namespace Igorw\Ilias;
 
 use Igorw\Ilias\Form\Form;
+use Igorw\Ilias\Form\SymbolForm;
 use Igorw\Ilias\Form\ListForm;
 
 class Walker
@@ -21,7 +22,7 @@ class Walker
             return $this->expandSubLists($form, $env);
         }
 
-        $macro = $this->getMacroForm($form, $env);
+        $macro = $this->getMacroOp($form, $env);
         $args = $form->cdr();
         $expanded = $macro->expandOne($args, $env);
 
@@ -35,19 +36,19 @@ class Walker
 
     private function isLambdaForm(ListForm $form, Environment $env)
     {
-        return $form->car() instanceof Form\SymbolForm
+        return $form->car() instanceof SymbolForm
             && $form->car()->existsInEnv($env)
             && $form->car()->evaluate($env) instanceof SpecialOp\LambdaOp;
     }
 
     private function isMacroCall(ListForm $form, Environment $env)
     {
-        return $form->car() instanceof Form\SymbolForm
+        return $form->car() instanceof SymbolForm
             && $form->car()->existsInEnv($env)
             && $form->car()->evaluate($env) instanceof SpecialOp\MacroOp;
     }
 
-    private function getMacroForm(ListForm $form, Environment $env)
+    private function getMacroOp(ListForm $form, Environment $env)
     {
         return $form->car()->evaluate($env);
     }
@@ -55,8 +56,8 @@ class Walker
     private function expandLambdaForm(ListForm $form, Environment $env)
     {
         $subEnv = clone $env;
-        foreach ($form->cdr()->car() as $argName) {
-            $subEnv[$argName] = null;
+        foreach ($form->cdr()->car()->toArray() as $argName) {
+            $subEnv[$argName->getSymbol()] = null;
         }
 
         return new ListForm(array_merge(
@@ -67,6 +68,10 @@ class Walker
 
     private function expandSubLists(ListForm $form, Environment $env)
     {
+        if (!count($form->toArray())) {
+            return $form;
+        }
+
         return new ListForm(array_merge(
             [$form->car()],
             $this->expandList($form->cdr(), $env)
