@@ -9,9 +9,9 @@ class IfOp implements SpecialOp
 {
     public function evaluate(Environment $env, ListForm $args)
     {
-        $predicate = $args->car();
-        $trueForm  = $args->cdr()->car();
-        $elseForm  = $args->cdr()->cdr()->car();
+        $predicate = $args->nth(0);
+        $trueForm  = $args->nth(1);
+        $elseForm  = $args->nth(2);
 
         $form = ($predicate->evaluate($env)) ? $trueForm : $elseForm;
         return $form ? $form->evaluate($env) : null;

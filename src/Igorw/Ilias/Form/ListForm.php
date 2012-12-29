@@ -16,7 +16,7 @@ class ListForm implements Form
 
     public function evaluate(Environment $env)
     {
-        $func = $this->car() ? $this->car()->evaluate($env) : null;
+        $func = $this->nth(0) ? $this->nth(0)->evaluate($env) : null;
 
         if (!$func) {
             throw new \RuntimeException(sprintf('Tried to invoke non-existent function %s', $func));
@@ -48,6 +48,12 @@ class ListForm implements Form
     public function cdr()
     {
         return new static(array_slice($this->forms, 1));
+    }
+
+    public function nth($index)
+    {
+        $forms = $this->toArray();
+        return isset($forms[$index]) ? $forms[$index] : null;
     }
 
     public function toArray()

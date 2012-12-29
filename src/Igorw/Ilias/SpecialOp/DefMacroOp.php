@@ -9,9 +9,9 @@ class DefMacroOp implements SpecialOp
 {
     public function evaluate(Environment $env, ListForm $args)
     {
-        $name = $args->car()->getSymbol();
-        $macroArgs = $args->cdr()->car();
-        $macroBody = $args->cdr()->cdr()->car();
+        $name = $args->nth(0)->getSymbol();
+        $macroArgs = $args->nth(1);
+        $macroBody = $args->nth(2);
         $env[$name] = new MacroOp($macroArgs, $macroBody);
     }
 }

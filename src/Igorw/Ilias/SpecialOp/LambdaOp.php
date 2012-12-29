@@ -9,7 +9,7 @@ class LambdaOp implements SpecialOp
 {
     public function evaluate(Environment $env, ListForm $args)
     {
-        $symbols = $args->car()->toArray();
+        $symbols = $args->nth(0)->toArray();
         $argNames = $this->getMappedSymbols($symbols);
 
         $bodyForms = $args->cdr()->toArray();

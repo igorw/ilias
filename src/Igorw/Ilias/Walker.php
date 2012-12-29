@@ -36,32 +36,32 @@ class Walker
 
     private function isLambdaForm(ListForm $form, Environment $env)
     {
-        return $form->car() instanceof SymbolForm
-            && $form->car()->existsInEnv($env)
-            && $form->car()->evaluate($env) instanceof SpecialOp\LambdaOp;
+        return $form->nth(0) instanceof SymbolForm
+            && $form->nth(0)->existsInEnv($env)
+            && $form->nth(0)->evaluate($env) instanceof SpecialOp\LambdaOp;
     }
 
     private function isMacroCall(ListForm $form, Environment $env)
     {
-        return $form->car() instanceof SymbolForm
-            && $form->car()->existsInEnv($env)
-            && $form->car()->evaluate($env) instanceof SpecialOp\MacroOp;
+        return $form->nth(0) instanceof SymbolForm
+            && $form->nth(0)->existsInEnv($env)
+            && $form->nth(0)->evaluate($env) instanceof SpecialOp\MacroOp;
     }
 
     private function getMacroOp(ListForm $form, Environment $env)
     {
-        return $form->car()->evaluate($env);
+        return $form->nth(0)->evaluate($env);
     }
 
     private function expandLambdaForm(ListForm $form, Environment $env)
     {
         $subEnv = clone $env;
-        foreach ($form->cdr()->car()->toArray() as $argName) {
+        foreach ($form->nth(1)->toArray() as $argName) {
             $subEnv[$argName->getSymbol()] = null;
         }
 
         return new ListForm(array_merge(
-            [$form->car(), $form->cdr()->car()],
+            [$form->nth(0), $form->nth(1)],
             $this->expandList($form->cdr()->cdr(), $subEnv)
         ));
     }
