@@ -10,11 +10,14 @@ class Environment extends \ArrayObject
             'define'    => new SpecialOp\DefineOp(),
             'lambda'    => new SpecialOp\LambdaOp(),
             'if'        => new SpecialOp\IfOp(),
+            'defmacro'  => new SpecialOp\DefMacroOp(),
 
             '+'         => new Func\PlusFunc(),
             '-'         => new Func\MinusFunc(),
             '>'         => new Func\GreaterThanFunc(),
             '<'         => new Func\LessThanFunc(),
+            'list'      => new Func\ListFunc(),
+            'begin'     => new Func\BeginFunc(),
         ]);
     }
 }

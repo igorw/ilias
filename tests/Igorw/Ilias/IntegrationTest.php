@@ -12,7 +12,8 @@ class IntegrationTest extends \PHPUnit_Framework_TestCase
         $this->program = new Program(
             new Lexer(),
             new Reader(),
-            new FormTreeBuilder()
+            new FormTreeBuilder(),
+            new Walker()
         );
 
         $this->env = Environment::standard();
@@ -22,7 +23,7 @@ class IntegrationTest extends \PHPUnit_Framework_TestCase
      * @test
      * @dataProvider provideEvaluate
      */
-    public function evaluate($expected, $code, array $vars = array())
+    public function evaluate($expected, $code, array $vars = [])
     {
         foreach ($vars as $name => $value) {
             $this->env[$name] = $value;
@@ -37,9 +38,6 @@ class IntegrationTest extends \PHPUnit_Framework_TestCase
             'empty'                 => [null, ''],
             'value'                 => [3, '(+ 1 2)'],
             'variable'              => [42, 'foo', ['foo' => 42]],
-            'quoted string'         => ['foo', "'foo"],
-            'quoted list'           => [['foo'], "'(foo)"],
-            'nested quoted list'    => [[['foo']], "'((foo))"],
             'lambda'                => [
                 42,
                 '(define identity (lambda (x) x)) (identity 42)',
@@ -55,6 +53,44 @@ class IntegrationTest extends \PHPUnit_Framework_TestCase
             'if with false cond'    => [3, '(if 0 (+ 1 1) (+ 1 1 1))'],
             'if without else'       => [null, '(if 0 2)'],
             'if with cond body'     => [3, '(if (- 1 1) 2 3)'],
+            'single level macro'    => [
+                3,
+                "(defmacro plus (a b) (list '+ a b)) (plus 1 2)",
+            ],
+            'two level macro'       => [
+                3,
+                "(defmacro plus (a b) (list '+ a b))
+                 (defmacro pl (a b) (list 'plus a b))
+                 (pl 1 2)",
+            ],
+            'when macro'            => [
+                3,
+                "(defmacro when (condition a b c)
+                    (list 'if condition (list 'begin a b c)))
+                 (define foo
+                    (lambda (x)
+                        (when (> x 10) 1 2 3)))
+                 (foo 11)",
+            ],
+        ];
+    }
+
+    /**
+     * @test
+     * @dataProvider provideEvaluateQuote
+     */
+    public function evaluateQuote($expected, $code)
+    {
+        $value = $this->program->evaluate($this->env, $code);
+        $this->assertEquals($expected, $value->getAst());
+    }
+
+    public function provideEvaluateQuote()
+    {
+        return [
+            'quoted string'         => ['foo', "'foo"],
+            'quoted list'           => [['foo'], "'(foo)"],
+            'nested quoted list'    => [[['foo']], "'((foo))"],
         ];
     }
 

@@ -28,9 +28,19 @@ class ProgramTest extends \PHPUnit_Framework_TestCase
             ->with([2])
             ->will($this->returnValue([new Form\LiteralForm(2)]));
 
+        $walker = $this->getMock('Igorw\Ilias\Walker');
+        $walker
+            ->expects($this->once())
+            ->method('expand')
+            ->with(
+                $this->isInstanceOf('Igorw\Ilias\Form\Form'),
+                $this->isInstanceOf('Igorw\Ilias\Environment')
+            )
+            ->will($this->returnArgument(0));
+
         $env = $this->getMock('Igorw\Ilias\Environment');
 
-        $program = new Program($lexer, $reader, $builder);
+        $program = new Program($lexer, $reader, $builder, $walker);
         $this->assertSame(2, $program->evaluate($env, '2'));
     }
 }

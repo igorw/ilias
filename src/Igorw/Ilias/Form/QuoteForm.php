@@ -7,20 +7,20 @@ use Igorw\Ilias\Ast\QuotedValue;
 
 class QuoteForm implements Form
 {
-    private $quoted;
+    private $value;
 
-    public function __construct(QuotedValue $quoted)
+    public function __construct($value)
     {
-        $this->quoted = $quoted;
+        $this->value = $value;
     }
 
     public function evaluate(Environment $env)
     {
-        return $this->quoted->getValue();
+        return $this->value;
     }
 
     public function getAst()
     {
-        return $this->quoted;
+        return new QuotedValue($this->value);
     }
 }
