@@ -2,7 +2,6 @@
 
 namespace Igorw\Ilias\Func;
 
-use Igorw\Ilias\FormTreeBuilder;
 use Igorw\Ilias\Form\ListForm;
 
 class ListFunc
