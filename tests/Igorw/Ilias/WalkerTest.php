@@ -29,7 +29,7 @@ class WalkerTest extends \PHPUnit_Framework_TestCase
 
         $form = $this->parseSexpr($sexpr);
 
-        $expanded = $walker->expand($form, $env);
+        $expanded = $walker->expand($env, $form);
         $this->assertEquals($expected, $expanded->getAst());
     }
 

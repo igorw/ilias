@@ -25,7 +25,7 @@ class Program
 
         $value = null;
         foreach ($forms as $form) {
-            $expanded = $this->walker->expand($form, $env);
+            $expanded = $this->walker->expand($env, $form);
             $value = $expanded->evaluate($env);
         }
         return $value;

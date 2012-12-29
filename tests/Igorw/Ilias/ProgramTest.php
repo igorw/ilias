@@ -33,10 +33,10 @@ class ProgramTest extends \PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('expand')
             ->with(
-                $this->isInstanceOf('Igorw\Ilias\Form\Form'),
-                $this->isInstanceOf('Igorw\Ilias\Environment')
+                $this->isInstanceOf('Igorw\Ilias\Environment'),
+                $this->isInstanceOf('Igorw\Ilias\Form\Form')
             )
-            ->will($this->returnArgument(0));
+            ->will($this->returnArgument(1));
 
         $env = $this->getMock('Igorw\Ilias\Environment');
 
