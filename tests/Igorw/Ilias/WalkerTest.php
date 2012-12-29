@@ -4,6 +4,13 @@ namespace Igorw\Ilias;
 
 class WalkerTest extends \PHPUnit_Framework_TestCase
 {
+    private $builder;
+
+    public function setUp()
+    {
+        $this->builder = new FormTreeBuilder();
+    }
+
     /**
      * @test
      * @dataProvider provideExpand
@@ -11,17 +18,16 @@ class WalkerTest extends \PHPUnit_Framework_TestCase
     public function expand($expected, $sexpr, array $macros = [])
     {
         $walker = new Walker();
-        $builder = new FormTreeBuilder();
 
         $env = Environment::standard();
         foreach ($macros as $name => $pair) {
             list($argsSexpr, $bodySexpr) = $pair;
-            $args = $builder->parseAst([$argsSexpr])[0];
-            $body = $builder->parseAst([$bodySexpr])[0];
-            $env[$name] = new SpecialOp\MacroOp($args, $body);
+            $macroArgs = $this->parseSexpr($argsSexpr);
+            $macroBody = $this->parseSexpr($bodySexpr);
+            $env[$name] = new SpecialOp\MacroOp($macroArgs, $macroBody);
         }
 
-        $form = $builder->parseAst([$sexpr])[0];
+        $form = $this->parseSexpr($sexpr);
 
         $expanded = $walker->expand($form, $env);
         $this->assertEquals($expected, $expanded->getAst());
@@ -83,5 +89,10 @@ class WalkerTest extends \PHPUnit_Framework_TestCase
                 ],
             ],
         ];
+    }
+
+    private function parseSexpr($sexpr)
+    {
+        return $this->builder->parseAst([$sexpr])[0];
     }
 }
