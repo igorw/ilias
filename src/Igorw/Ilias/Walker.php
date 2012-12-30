@@ -36,16 +36,19 @@ class Walker
 
     private function isLambdaForm(Environment $env, ListForm $form)
     {
-        return $form->nth(0) instanceof SymbolForm
-            && $form->nth(0)->existsInEnv($env)
-            && $form->nth(0)->evaluate($env) instanceof SpecialOp\LambdaOp;
+        return $this->isFormOfType($env, $form, 'Igorw\Ilias\SpecialOp\LambdaOp');
     }
 
     private function isMacroCall(Environment $env, ListForm $form)
     {
+        return $this->isFormOfType($env, $form, 'Igorw\Ilias\SpecialOp\MacroOp');
+    }
+
+    private function isFormOfType(Environment $env, ListForm $form, $type)
+    {
         return $form->nth(0) instanceof SymbolForm
             && $form->nth(0)->existsInEnv($env)
-            && $form->nth(0)->evaluate($env) instanceof SpecialOp\MacroOp;
+            && $form->nth(0)->evaluate($env) instanceof $type;
     }
 
     private function getMacroOp(Environment $env, ListForm $form)
