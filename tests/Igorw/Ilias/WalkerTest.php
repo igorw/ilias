@@ -45,6 +45,10 @@ class WalkerTest extends \PHPUnit_Framework_TestCase
                 [],
                 [],
             ],
+            'literal form' => [
+                42,
+                42,
+            ],
             'simple list form' => [
                 ['+', 1, 2],
                 ['+', 1, 2],
@@ -65,6 +69,13 @@ class WalkerTest extends \PHPUnit_Framework_TestCase
                         ['a', 'b'],
                         ['list', new Ast\QuotedValue('plus'), 'a', 'b'],
                     ],
+                ],
+            ],
+            'nested list form macro' => [
+                ['+', 1, ['+', 2, 3]],
+                ['plus', 1, ['plus', 2, 3]],
+                [
+                    'plus' => $macros['plus'],
                 ],
             ],
             'lambda args evasion in macro' => [
