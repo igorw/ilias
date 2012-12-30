@@ -55,7 +55,8 @@ class IntegrationTest extends \PHPUnit_Framework_TestCase
             'if with cond body'     => [3, '(if (- 1 1) 2 3)'],
             'single level macro'    => [
                 3,
-                "(defmacro plus (a b) (list '+ a b)) (plus 1 2)",
+                "(defmacro plus (a b) (list '+ a b))
+                 (plus 1 2)",
             ],
             'two level macro'       => [
                 3,
