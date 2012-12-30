@@ -35,6 +35,11 @@ class WalkerTest extends \PHPUnit_Framework_TestCase
 
     public function provideExpand()
     {
+        $macros['plus'] = [
+            ['a', 'b'],
+            ['list', new Ast\QuotedValue('+'), 'a', 'b'],
+        ];
+
         return [
             'empty list form' => [
                 [],
@@ -48,20 +53,14 @@ class WalkerTest extends \PHPUnit_Framework_TestCase
                 ['+', 1, 2],
                 ['plus', 1, 2],
                 [
-                    'plus' => [
-                        ['a', 'b'],
-                        ['list', new Ast\QuotedValue('+'), 'a', 'b'],
-                    ],
+                    'plus' => $macros['plus'],
                 ],
             ],
             'two level macro' => [
                 ['+', 1, 2],
                 ['pl', 1, 2],
                 [
-                    'plus' => [
-                        ['a', 'b'],
-                        ['list', new Ast\QuotedValue('+'), 'a', 'b'],
-                    ],
+                    'plus' => $macros['plus'],
                     'pl' => [
                         ['a', 'b'],
                         ['list', new Ast\QuotedValue('plus'), 'a', 'b'],
@@ -72,20 +71,14 @@ class WalkerTest extends \PHPUnit_Framework_TestCase
                 ['lambda', ['plus', 'minus'], ['plus', 'minus', 1]],
                 ['lambda', ['plus', 'minus'], ['plus', 'minus', 1]],
                 [
-                    'plus' => [
-                        ['a', 'b'],
-                        ['list', new Ast\QuotedValue('+'), 'a', 'b'],
-                    ],
+                    'plus' => $macros['plus'],
                 ],
             ],
             'macro replacement within lambda body' => [
                 ['lambda', ['a', 'b'], ['+', 'a', 'b']],
                 ['lambda', ['a', 'b'], ['plus', 'a', 'b']],
                 [
-                    'plus' => [
-                        ['a', 'b'],
-                        ['list', new Ast\QuotedValue('+'), 'a', 'b'],
-                    ],
+                    'plus' => $macros['plus'],
                 ],
             ],
         ];
