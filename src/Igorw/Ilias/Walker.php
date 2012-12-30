@@ -73,7 +73,7 @@ class Walker
         }
 
         return new ListForm(array_merge(
-            [$form->car()],
+            [$form->nth(0)],
             $this->expandList($env, $form->cdr())
         ));
     }
