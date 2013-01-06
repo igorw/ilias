@@ -1,13 +1,14 @@
 <?php
 
-namespace Igorw\Ilias;
+namespace functional;
 
-class ReadmeTest extends \PHPUnit_Framework_TestCase {
-
-    public function provideExamplesFromReadme() {
+class ReadmeTest extends \PHPUnit_Framework_TestCase
+{
+    public function provideExamplesFromReadme()
+    {
         preg_match_all(
             '(```php(?P<code>.+?)```.+?```(?P<output>.+?)```.+?)s',
-            file_get_contents(__DIR__ . '/../../../README.md'),
+            file_get_contents(__DIR__ . '/../../README.md'),
             $matches
         );
         $tests = [];
@@ -21,7 +22,8 @@ class ReadmeTest extends \PHPUnit_Framework_TestCase {
      * @test
      * @dataProvider provideExamplesFromReadme
      */
-    public function usageSample($code, $output) {
+    public function usageSample($code, $output)
+    {
         $this->setOutputCallback(function ($output) {
             return trim($output);
         });

@@ -10,7 +10,7 @@
 
     <testsuites>
         <testsuite name="Ilias Test Suite">
-            <directory>./tests/Igorw/</directory>
+            <directory>./tests/</directory>
         </testsuite>
     </testsuites>
 

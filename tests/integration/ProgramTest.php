@@ -1,8 +1,15 @@
 <?php
 
-namespace Igorw\Ilias;
+namespace integration;
 
-class IntegrationTest extends \PHPUnit_Framework_TestCase
+use Igorw\Ilias\Program;
+use Igorw\Ilias\Lexer;
+use Igorw\Ilias\Reader;
+use Igorw\Ilias\FormTreeBuilder;
+use Igorw\Ilias\Walker;
+use Igorw\Ilias\Environment;
+
+class ProgramTest extends \PHPUnit_Framework_TestCase
 {
     private $program;
     private $env;
