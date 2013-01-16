@@ -41,8 +41,6 @@ function environment()
     ];
 }
 
-require __DIR__.'/../vendor/autoload.php';
-
 $ast = [['+', 1, 2]];
 $env = environment();
 var_dump(evaluateAst($ast, $env));
