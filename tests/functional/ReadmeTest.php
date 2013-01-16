@@ -24,9 +24,7 @@ class ReadmeTest extends \PHPUnit_Framework_TestCase
      */
     public function usageSample($code, $output)
     {
-        $this->setOutputCallback(function ($output) {
-            return trim($output);
-        });
+        $this->setOutputCallback('trim');
         $this->expectOutputString(trim($output));
         $this->assertNull(
             eval($code)
