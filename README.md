@@ -3,6 +3,9 @@
 Naive LISP implementation in PHP. For something more complete, check out
 [Lisphp](https://github.com/lisphp/lisphp).
 
+Check out the [s-expression blog posts](https://igor.io/2012/12/06/sexpr.html)
+explaining the implementation of Ilias.
+
 ## Usage
 
 ```php
