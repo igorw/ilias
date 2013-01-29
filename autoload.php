@@ -1,6 +1,6 @@
 <?php
 
-spl_autoload_register(function($className) {
+spl_autoload_register(function ($className) {
     $prefix = 'Igorw\\Ilias\\';
     $basePath = __DIR__.'/src/';
     if (strncmp($prefix, $className, strlen($prefix)) === 0) {
