@@ -8,7 +8,6 @@ use Igorw\Ilias\Reader;
 use Igorw\Ilias\FormTreeBuilder;
 use Igorw\Ilias\Walker;
 use Igorw\Ilias\Environment;
-use Igorw\Ilias\Ast\QuotedValue;
 
 class ProgramTest extends \PHPUnit_Framework_TestCase
 {
