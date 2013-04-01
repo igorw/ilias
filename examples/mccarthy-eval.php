@@ -107,9 +107,8 @@ $code = <<<EOF
         (#else (cons (eval.  (car m) a)
                      (evlis. (cdr m) a))))))
 
-(eval. (quote
-        (cons (quote foo)
-              (quote (bar baz))))
+(eval. (quote (cons (quote foo)
+                    (quote (bar baz))))
        (quote ()))
 EOF;
 
