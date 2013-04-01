@@ -209,6 +209,17 @@ class ProgramTest extends \PHPUnit_Framework_TestCase
             [true, '(eq? (quote a) (quote a))'],
             [false, '(eq? (quote a) (quote b))'],
 
+            [true, '(atom? (quote a))'],
+            [true, "(atom? 'a)"],
+            [false, "(atom? '())"],
+            [false, "(atom? '(foo))"],
+            [false, "(atom? '(foo bar))"],
+            [false, '(atom? true)'],
+            [false, '(atom? false)'],
+            [false, '(atom? #else)'],
+            [false, '(atom? 5)'],
+            [false, '(atom? -5)'],
+
             ['foo', "(car '(foo bar baz))"],
             [null, "(car '())"],
 
