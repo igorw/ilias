@@ -11,6 +11,8 @@ class Environment extends \ArrayObject
             'lambda'    => new SpecialOp\LambdaOp(),
             'if'        => new SpecialOp\IfOp(),
             'defmacro'  => new SpecialOp\DefMacroOp(),
+            'quote'     => new SpecialOp\QuoteOp(),
+            'cond'      => new SpecialOp\CondOp(),
 
             '+'         => new Func\PlusFunc(),
             '-'         => new Func\MinusFunc(),
@@ -18,6 +20,15 @@ class Environment extends \ArrayObject
             '<'         => new Func\LessThanFunc(),
             'list'      => new Func\ListFunc(),
             'begin'     => new Func\BeginFunc(),
+            'eq'        => new Func\EqFunc(),
+            'atom'      => new Func\AtomFunc(),
+            'car'       => new Func\CarFunc(),
+            'cdr'       => new Func\CdrFunc(),
+            'cons'      => new Func\ConsFunc(),
+
+            'true'      => true,
+            'false'     => false,
+            '#else'     => true,
         ]);
     }
 }

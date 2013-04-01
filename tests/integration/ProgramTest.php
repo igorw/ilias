@@ -8,6 +8,7 @@ use Igorw\Ilias\Reader;
 use Igorw\Ilias\FormTreeBuilder;
 use Igorw\Ilias\Walker;
 use Igorw\Ilias\Environment;
+use Igorw\Ilias\Ast\QuotedValue;
 
 class ProgramTest extends \PHPUnit_Framework_TestCase
 {
@@ -36,7 +37,8 @@ class ProgramTest extends \PHPUnit_Framework_TestCase
             $this->env[$name] = $value;
         }
 
-        $this->assertSame($expected, $this->program->evaluate($this->env, $code));
+        $value = $this->program->evaluate($this->env, $code);
+        $this->assertSame($expected, $value);
     }
 
     public function provideEvaluate()
@@ -80,6 +82,14 @@ class ProgramTest extends \PHPUnit_Framework_TestCase
                         (when (> x 10) 1 2 3)))
                  (foo 11)",
             ],
+            'quoted symbol'    => [
+                'foo',
+                "'foo",
+            ],
+            'id of quoted symbol'    => [
+                'foo',
+                "(define identity (lambda (x) x)) (identity 'foo)",
+            ],
         ];
     }
 
@@ -90,7 +100,7 @@ class ProgramTest extends \PHPUnit_Framework_TestCase
     public function evaluateQuote($expected, $code)
     {
         $value = $this->program->evaluate($this->env, $code);
-        $this->assertEquals($expected, $value->getAst());
+        $this->assertEquals($expected, $value);
     }
 
     public function provideEvaluateQuote()
@@ -152,6 +162,53 @@ class ProgramTest extends \PHPUnit_Framework_TestCase
             [21, 8],
             [34, 9],
             [55, 10],
+        ];
+    }
+
+    /**
+     * @test
+     * @dataProvider provideSpecialOp
+     */
+    public function specialOp($expected, $code)
+    {
+        $value = $this->program->evaluate($this->env, $code);
+        $this->assertEquals($expected, $value);
+    }
+
+    public function provideSpecialOp()
+    {
+        return [
+            ['foo', '(quote foo)'],
+            [['foo'], '(quote (foo))'],
+            [['foo', 'bar', 'baz'], '(quote (foo bar baz))'],
+            [['quote', ['quote', 'foo']], '(quote (quote (quote foo)))'],
+            [[], '(quote ())'],
+
+            [null, '(cond)'],
+            ['foo', '(cond (#else (quote foo)))'],
+            ['foo', '(cond (true (quote foo)) (#else (quote bar)))'],
+            ['bar', '(cond (false (quote foo)) (#else (quote bar)))'],
+        ];
+    }
+
+    /**
+     * @test
+     * @dataProvider provideFunc
+     */
+    public function func($expected, $code)
+    {
+        $value = $this->program->evaluate($this->env, $code);
+        $this->assertEquals($expected, $value);
+    }
+
+    public function provideFunc()
+    {
+        return [
+            [true, '(eq 1 1)'],
+            [true, '(eq 3 (+ 1 2))'],
+            [false, '(eq 1 2)'],
+            [true, '(eq (quote a) (quote a))'],
+            [false, '(eq (quote a) (quote b))'],
         ];
     }
 }
