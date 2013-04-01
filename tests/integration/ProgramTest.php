@@ -208,6 +208,18 @@ class ProgramTest extends \PHPUnit_Framework_TestCase
             [false, '(eq? 1 2)'],
             [true, '(eq? (quote a) (quote a))'],
             [false, '(eq? (quote a) (quote b))'],
+
+            ['foo', "(car '(foo bar baz))"],
+            [null, "(car '())"],
+
+            [[], "(cdr '(foo))"],
+            [['bar'], "(cdr '(foo bar))"],
+            [['bar', 'baz'], "(cdr '(foo bar baz))"],
+            [[], "(cdr '())"],
+
+            [['foo'], "(cons 'foo '())"],
+            [['foo', 'bar'], "(cons 'foo '(bar))"],
+            [['foo', 'bar', 'baz'], "(cons 'foo '(bar baz))"],
         ];
     }
 }
