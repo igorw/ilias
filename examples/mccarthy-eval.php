@@ -33,7 +33,7 @@ $code = <<<EOF
 (define and.
   (lambda (x y)
     (cond
-      (x (cond (y 't) (#else '())))
+      (x (cond (y true) (#else '())))
       (#else '()))))
 
 (define not.
