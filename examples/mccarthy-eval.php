@@ -6,7 +6,6 @@
 // Assumes only quote, atom, eq, cons, car, cdr, cond.
 
 $code = <<<EOF
-
 (define caar
     (lambda (l)
         (car (car l))))
