@@ -204,11 +204,11 @@ class ProgramTest extends \PHPUnit_Framework_TestCase
     public function provideFunc()
     {
         return [
-            [true, '(eq 1 1)'],
-            [true, '(eq 3 (+ 1 2))'],
-            [false, '(eq 1 2)'],
-            [true, '(eq (quote a) (quote a))'],
-            [false, '(eq (quote a) (quote b))'],
+            [true, '(eq? 1 1)'],
+            [true, '(eq? 3 (+ 1 2))'],
+            [false, '(eq? 1 2)'],
+            [true, '(eq? (quote a) (quote a))'],
+            [false, '(eq? (quote a) (quote b))'],
         ];
     }
 }
