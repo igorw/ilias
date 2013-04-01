@@ -59,5 +59,3 @@ class MacroOp implements SpecialOp
         return new ListForm($wrappedBody);
     }
 }
-
-// (list '+ a b)
