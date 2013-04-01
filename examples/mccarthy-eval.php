@@ -1,5 +1,7 @@
 <?php
 
+// Eval written in lisp - a meta-circular evaluator
+//
 // based on http://lib.store.yahoo.net/lib/paulgraham/jmc.lisp
 //
 // The Lisp defined in McCarthy's 1960 paper, translated into CL.
