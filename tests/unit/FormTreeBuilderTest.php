@@ -69,6 +69,18 @@ class FormTreeBuilderTest extends \PHPUnit_Framework_TestCase
                 ]),
                 ['+', 1, ['+', 2, ['+', 3, 4, 5, 6, ['+', 6, 4, 3, 2], 5, 1]]],
             ],
+            'quoted symbol' => [
+                new Form\QuoteForm('foo'),
+                new Ast\QuotedValue('foo'),
+            ],
+            'quoted list' => [
+                new Form\QuoteForm(['foo', 'bar', 'baz']),
+                new Ast\QuotedValue(['foo', 'bar', 'baz']),
+            ],
+            'quoted nested list' => [
+                new Form\QuoteForm([['a', 'b'], ['c', 'd'], ['e', 'f']]),
+                new Ast\QuotedValue([['a', 'b'], ['c', 'd'], ['e', 'f']]),
+            ],
         ];
     }
 }
