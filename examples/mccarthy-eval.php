@@ -108,27 +108,11 @@ $code = <<<EOF
         (#else (cons (eval.  (car m) a)
                      (evlis. (cdr m) a))))))
 
-(eval. (quote (cons (quote foo)
-                    (quote (bar baz))))
+(eval. (quote
+          ((lambda (l) (cons (quote foo) l))
+           (quote (bar baz))))
        (quote ()))
 EOF;
 
-require __DIR__.'/../vendor/autoload.php';
-
-use Igorw\Ilias\Program;
-use Igorw\Ilias\Lexer;
-use Igorw\Ilias\Reader;
-use Igorw\Ilias\FormTreeBuilder;
-use Igorw\Ilias\Walker;
-use Igorw\Ilias\Environment;
-
-$program = new Program(
-    new Lexer(),
-    new Reader(),
-    new FormTreeBuilder(),
-    new Walker()
-);
-
-$env = Environment::standard();
-$value = $program->evaluate($env, $code);
-var_dump($value);
+require __DIR__.'/_run.php';
+run($code);
