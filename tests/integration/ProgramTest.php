@@ -187,6 +187,7 @@ class ProgramTest extends \PHPUnit_Framework_TestCase
             ['foo', '(cond (#else (quote foo)))'],
             ['foo', '(cond (true (quote foo)) (#else (quote bar)))'],
             ['bar', '(cond (false (quote foo)) (#else (quote bar)))'],
+            [null, '(cond (false (quote foo)) (false (quote bar)))'],
         ];
     }
 
