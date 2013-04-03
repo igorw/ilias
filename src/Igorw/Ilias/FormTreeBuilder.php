@@ -22,8 +22,7 @@ class FormTreeBuilder
     private function parseAtom($atom)
     {
         if ($atom instanceof Ast\QuotedValue) {
-            $parsedValue = $this->parseSexpr($atom->getValue());
-            return new Form\QuoteForm($parsedValue);
+            return new Form\QuoteForm($atom->getValue());
         }
 
         if (is_string($atom)) {
