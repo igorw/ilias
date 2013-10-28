@@ -9,24 +9,24 @@
 
 $code = <<<EOF
 (define caar
-    (lambda (l)
-        (car (car l))))
+  (lambda (l)
+    (car (car l))))
 
 (define cadr
-    (lambda (l)
-        (car (cdr l))))
+  (lambda (l)
+    (car (cdr l))))
 
 (define cadar
-    (lambda (l)
-        (car (cdr (car l)))))
+  (lambda (l)
+    (car (cdr (car l)))))
 
 (define caddar
-    (lambda (l)
-        (car (cdr (cdr (car l))))))
+  (lambda (l)
+    (car (cdr (cdr (car l))))))
 
 (define caddr
-    (lambda (l)
-        (car (cdr (cdr l)))))
+  (lambda (l)
+    (car (cdr (cdr l)))))
 
 (define null.
   (lambda (x)
