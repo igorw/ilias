@@ -54,6 +54,10 @@ class MacroOp implements SpecialOp
                 if (is_numeric($form)) {
                     return new SymbolForm($form);
                 }
+                
+                if ($form instanceof QuotedValue) {
+                    return new SymbolForm($form);
+                }
 
                 return $form;
             },
