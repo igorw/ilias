@@ -26,6 +26,7 @@ $program = new Program(
 $env = Environment::standard();
 
 $program->evaluate($env, $macros);
+echo ($program->evaluate($env, $code))."\n";
 
 $expandedForms = expand($env, $code);
 foreach ($expandedForms as $expanded) {

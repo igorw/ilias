@@ -31,6 +31,25 @@ class Lexer
                 continue;
             }
 
+
+            // String
+            if ('"' === $char){
+                $tokens[] = "'";
+                $atom = '';
+                $max_i = strlen($code);
+                do {
+                    $i++;
+                    $char = $code[$i];
+                    if ($char === '"'){
+                        break;
+                    }
+                    $atom .= $char;
+                } while ($i < $max_i);
+                $tokens[] = $atom;
+                continue;
+            }
+            
+
             // atom token
             $atom = '';
             $next = $char;
