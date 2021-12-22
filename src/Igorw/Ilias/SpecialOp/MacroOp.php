@@ -3,6 +3,7 @@
 namespace Igorw\Ilias\SpecialOp;
 
 use Igorw\Ilias\Environment;
+use Igorw\Ilias\FormTreeBuilder;
 use Igorw\Ilias\Form\Form;
 use Igorw\Ilias\Form\ListForm;
 use Igorw\Ilias\Form\SymbolForm;
@@ -38,7 +39,6 @@ class MacroOp implements SpecialOp
         $rawBody = call_user_func_array($transformFn, $form->toArray());
         return $this->wrapSymbols($rawBody);
     }
-
     private function wrapSymbols(ListForm $rawBody)
     {
         $wrappedBody = array_map(
@@ -48,6 +48,14 @@ class MacroOp implements SpecialOp
                 }
 
                 if (is_string($form)) {
+                    return new SymbolForm($form);
+                }
+
+                if (is_numeric($form)) {
+                    return new SymbolForm($form);
+                }
+                
+                if ($form instanceof QuotedValue) {
                     return new SymbolForm($form);
                 }
 

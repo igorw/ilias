@@ -1,0 +1,3 @@
+tasks:
+  -  init: composer install
+     command: cd examples && php macro-expand.php "(defmacro plus (a b) (list '+ a b))(defmacro pl (a b) (list 'plus a b))(defmacro p () (list 'pl 1 2) )" "p()"
